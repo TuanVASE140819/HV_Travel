@@ -1,0 +1,16 @@
+.slick-dots li {
+    width: 30px; /* Increase the width */
+    height: 30px; /* Increase the height */
+}
+
+.slick-dots li button {
+    width: 30px; /* Increase the width */
+    height: 30px; /* Increase the height */
+    padding: 10px; /* Adjust padding if needed */
+}
+.slick-dots li.slick-active button:before {
+    color: orange;
+    opacity: 1;
+    
+}
+

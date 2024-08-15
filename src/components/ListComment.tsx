@@ -5,8 +5,9 @@ import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "../styles/comment.css";
-import { firestore, getDocs, collection} from "../firebaseConfig";
+import { firestore, getDocs, collection } from "../firebaseConfig";
 import { QueryDocumentSnapshot } from "firebase/firestore";
+
 interface Comment {
   id: string;
   rating: number;
@@ -30,8 +31,15 @@ const renderStars = (rating: number) => {
   return stars;
 };
 
+const Skeleton = () => (
+  <div className="animate-pulse">
+    <div className="flex flex-col justify-start rounded-lg shadow-lg m-4 px-6 py-8 bg-gray-300 h-64"></div>
+  </div>
+);
+
 const CommentSlider = () => {
   const [comments, setComments] = useState<Comment[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -41,6 +49,7 @@ const CommentSlider = () => {
         ...doc.data()
       })) as Comment[];
       setComments(commentsData);
+      setLoading(false);
     };
 
     fetchComments();
@@ -80,29 +89,37 @@ const CommentSlider = () => {
         <h1 className="text-2xl font-bold">Feedback</h1>
       </div>
       <div className="w-full mt-8">
-        <Slider {...settings}>
-          {comments.map((comment) => (
-            <div key={comment.id}>
-              <div className="bg-white flex flex-col justify-start rounded-lg shadow-lg m-4 px-6 py-8">
-                <div className="flex mt-4 justify-start">
-                  <img
-                    src={comment.avatar}
-                    alt={comment.name}
-                    className="w-16 h-16 rounded-full mb-4"
-                  />
-                  <div className="ml-4">
-                    <div className="flex mt-2">{renderStars(comment.rating)}</div>
-                    <h3 className="text-xl font-bold">{comment.name}</h3>
-                    <p className="text-gray-600">{comment.date}</p>
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[1, 2, 3].map((i) => (
+              <Skeleton key={i} />
+            ))}
+          </div>
+        ) : (
+          <Slider {...settings}>
+            {comments.map((comment) => (
+              <div key={comment.id}>
+                <div className="bg-white flex flex-col justify-start rounded-lg shadow-lg m-4 px-6 py-8">
+                  <div className="flex mt-4 justify-start">
+                    <img
+                      src={comment.avatar}
+                      alt={comment.name}
+                      className="w-16 h-16 rounded-full mb-4"
+                    />
+                    <div className="ml-4">
+                      <div className="flex mt-2">{renderStars(comment.rating)}</div>
+                      <h3 className="text-xl font-bold">{comment.name}</h3>
+                      <p className="text-gray-600">{comment.date}</p>
+                    </div>
                   </div>
+                  <p className="text-gray-600 mt-2 text-center">
+                    &quot;{comment.comment}&quot;
+                  </p>
                 </div>
-                <p className="text-gray-600 mt-2 text-center">
-                  &quot;{comment.comment}&quot;
-                </p>
               </div>
-            </div>
-          ))}
-        </Slider>
+            ))}
+          </Slider>
+        )}
       </div>
     </section>
   );

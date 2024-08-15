@@ -18,6 +18,39 @@ const tours = [
   { id: 6, name: "Hành Trình Phan Thiết", image: "/images/tour3.jpg", rating: 4.4, time: "2 ngày 1 đêm", price: "2,500,000", khoihanh: "Thứ 5 hàng tuần" },
 ];
 
+const Skeleton = () => (
+  <div className="animate-pulse">
+    <div className="container mx-auto my-4 mt-36 px-4">
+      <div className="flex flex-col md:flex-row items-center md:items-start gap-4">
+        <div className="w-full md:w-1/2 flex flex-row gap-4">
+          <div className="w-[35rem] h-[35rem] bg-gray-300 rounded-3xl"></div>
+          <div className="flex flex-col gap-2">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="w-28 h-28 bg-gray-300 rounded-3xl"></div>
+            ))}
+          </div>
+        </div>
+        <div className="w-full md:w-1/2">
+          <div className="h-6 bg-gray-300 rounded w-1/4 mb-2"></div>
+          <div className="h-8 bg-gray-300 rounded w-1/2 mb-4"></div>
+          <div className="h-6 bg-gray-300 rounded w-1/3 mb-2"></div>
+          <div className="h-6 bg-gray-300 rounded w-1/3 mb-2"></div>
+          <div className="h-6 bg-gray-300 rounded w-1/3 mb-2"></div>
+          <div className="h-6 bg-gray-300 rounded w-1/3 mb-4"></div>
+          <div className="h-6 bg-gray-300 rounded w-1/4 mb-2"></div>
+          <div className="h-6 bg-gray-300 rounded w-1/3 mb-4"></div>
+          <div className="h-10 bg-gray-300 rounded w-1/2"></div>
+        </div>
+      </div>
+      {/* Thêm hiệu ứng mới */}
+      <div className="flex justify-center mt-8">
+        <div className="w-16 h-16 bg-gray-300 rounded-full animate-bounce"></div>
+        <div className="w-16 h-16 bg-gray-300 rounded-full animate-spin ml-4"></div>
+      </div>
+    </div>
+  </div>
+);
+
 const TourDetailPage = () => {
   const { id } = useParams();
   const [tour, setTour] = useState<Tour | null>(null);
@@ -48,7 +81,7 @@ const TourDetailPage = () => {
 
   console.log(tour);
   if (loading) {
-    return <div>Đang tải...</div>;
+    return <Skeleton />;
   }
 
   if (error) {
@@ -120,10 +153,11 @@ const TourDetailPage = () => {
                   </p>
                 </div>
                 <div>
-                  <p className="text-gray-600 mb-1">{tour.time}</p>
+                  <p className="text-gray-600 mb-1">{tour.duration}</p>
                   <p className="text-gray-600 mb-1">{tour.price}</p>
-                  <p className="text-gray-600 mb-4">{tour.khoihanh}</p>
-                </div>
+                  <p className="text-gray-600 mb-1">{tour.departure}</p>     
+                  <p className="text-gray-600 mb-4">{tour.address}</p>
+                             </div>
               </div>
             </div>
             <div className="w-50 h-[1px] bg-gray-300"></div>
@@ -159,7 +193,7 @@ const TourDetailPage = () => {
       <ul className="list-disc list-inside ml-4 mt-2">
         {/* chia là 2 phần */}
         <div className="grid grid-cols-2 gap-2 text-gray-600">
-        {tour.highlights.map((highlight, i) => (
+        {tour.highlights?.map((highlight, i) => (
           <li key={i}>{highlight}</li>
         ))}
         </div>
@@ -167,22 +201,24 @@ const TourDetailPage = () => {
       </ul>
     </div>
     <div className="w-50 h-[1px] bg-gray-300"></div>
-    <div className="mt-8">
-      <h2 className="text-xl font-semibold">Lịch trình chi tiết</h2>
-      <ul className="list-disc list-inside ml-4 mt-2">
-      {JSON.parse(tour.itinerary).map((item, i) => (
-          <>
-              <div className="mt-4 grid grid-cols-3 gap-4">
+      <div className="mt-8">
+  <h2 className="text-xl font-semibold">Lịch trình chi tiết</h2>
+  <ul className="list-disc list-inside ml-4 mt-2">
+    {(() => {
+      try {
+        const itinerary = JSON.parse(tour.itinerary);
+        return itinerary.map((item, i) => (
+          <React.Fragment key={i}>
+            <div className="mt-4 grid grid-cols-3 gap-4">
             <div className="col-span-1">
            
-            <img
-              src={`/images/tour${i + 1}.jpg`}
-              alt="Daily Image"
-              className='rounded-3xl w-full object'
-            />
-          </div>
-         
-          <div className="col-span-2 text-gray-600 ">
+           <img
+             src={`/images/tour${i + 1}.jpg`}
+             alt="Daily Image"
+             className='rounded-3xl w-full object'
+           />
+         </div>
+         <div className="col-span-2 text-gray-600 ">
             <h3 className="text-lg font-medium">
               Ngày {i + 1}: {item.title}
             </h3>
@@ -190,12 +226,18 @@ const TourDetailPage = () => {
               {item.content}
             </p>
           </div>
-        </div>
-          </>
-        ))}
-      </ul>
- 
-    </div>
+            
+            </div>
+          </React.Fragment>
+        ));
+      } catch (e) {
+        console.error("Invalid JSON in tour.itinerary", e);
+        return <li>Invalid itinerary data</li>;
+      }
+    })()}
+  </ul>
+</div>
+   
     <div className="mt-8">
     <div className="flex flex-row justify-between items-center mb-4">
         <h1 className="text-2xl font-bold mb-4">Tours</h1>

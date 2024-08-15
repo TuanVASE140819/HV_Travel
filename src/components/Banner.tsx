@@ -10,9 +10,29 @@ interface Banner {
   image: string;
 }
 
+const Skeleton: React.FC = () => (
+  <div className="animate-pulse">
+    <div className="slider mt-24">
+      <div className="slider-inner">
+        <div className="slide">
+          <div className="w-full h-[1080px] bg-gray-300"></div>
+        </div>
+      </div>
+      <div className="dots-wrapper">
+        <div className="dots">
+          {[...Array(3)].map((_, index) => (
+            <span key={index} className="dot bg-gray-300"></span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
 const BannerComponent: React.FC = () => {
   const [slides, setSlides] = useState<Banner[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
   const length = slides.length;
 
   const nextSlide = useCallback(() => {
@@ -32,6 +52,7 @@ const BannerComponent: React.FC = () => {
     const fetchSlides = async () => {
       const data: Banner[] = await fetchBanners();
       setSlides(data);
+      setLoading(false);
     };
     fetchSlides();
   }, []);
@@ -45,6 +66,10 @@ const BannerComponent: React.FC = () => {
     onSwipedRight: prevSlide,
     trackMouse: true,  // Enable mouse dragging
   });
+
+  if (loading) {
+    return <Skeleton />;
+  }
 
   return (
     <section className="slider mt-24" {...handlers}>

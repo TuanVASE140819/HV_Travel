@@ -14,10 +14,10 @@ export interface Tour {
     khoihanh: string;
     rating: number;
     address: string;
-    departure: string;
-    duration: string;
+    departure: string;//ngay khoi hanh
+    duration: string;//thoi gian
     highlights: string[];
-    itinerary: string;
+    itinerary: string;//lich trinh
     phone: string;
   }
   

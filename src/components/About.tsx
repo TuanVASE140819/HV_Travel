@@ -1,6 +1,32 @@
 import Image from 'next/image';
 import React from 'react';
 
+const Skeleton: React.FC = () => (
+  <div className="animate-pulse">
+    <div className="container mx-auto my-4 mt-36 px-4">
+      <div className="flex flex-col md:flex-row items-center md:items-start gap-4">
+        <div className="w-full md:w-1/2 flex flex-row gap-4">
+          <div className="w-[35rem] h-[35rem] bg-gray-300 rounded-3xl"></div>
+          <div className="flex flex-col gap-2">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="w-28 h-28 bg-gray-300 rounded-3xl"></div>
+            ))}
+          </div>
+        </div>
+        <div className="w-full md:w-1/2">
+          <div className="h-6 bg-gray-300 rounded w-1/4 mb-2"></div>
+          <div className="h-8 bg-gray-300 rounded w-1/2 mb-4"></div>
+          <div className="h-6 bg-gray-300 rounded w-1/3 mb-2"></div>
+          <div className="h-6 bg-gray-300 rounded w-1/3 mb-2"></div>
+          <div className="h-6 bg-gray-300 rounded w-1/3 mb-2"></div>
+          <div className="h-6 bg-gray-300 rounded w-1/3 mb-4"></div>
+          <div className="h-6 bg-gray-300 rounded w-1/4 mb-2"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
 const About: React.FC = () => {
   return (
     <section id="about-section" className="my-4 md:my-36 px-4">

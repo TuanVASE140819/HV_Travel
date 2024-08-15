@@ -1,11 +1,13 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { fetchLogoURL } from '../firebaseConfig';
 
 const Header: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeLink, setActiveLink] = useState<string | null>(null);
+  const [logoURL, setLogoURL] = useState<string | null>(null);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -15,12 +17,27 @@ const Header: React.FC = () => {
     setActiveLink(link);
   };
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const loadLogo = async () => {
+        const url = await fetchLogoURL();
+        setLogoURL(url);
+      };
+      loadLogo();
+    }
+  }, []);
+
+
   return (
     <header className="fixed top-0 left-0 w-full bg-white z-10">
       <div className="flex justify-between items-center container mx-auto p-4">
         {/* Left Section - Logo */}
         <div className="left-section">
-          <Image src="/images/logo.jpg" alt="logo" width={100} height={100} />
+        {logoURL ? (
+        <Image src={logoURL} alt="logo" width={100} height={100} />
+      ) : (
+        <p>Loading...</p>
+      )}
         </div>
 
         {/* Right Section - Info & Menu Button */}

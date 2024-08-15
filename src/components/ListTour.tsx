@@ -1,63 +1,9 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from 'react';
+import { fetchTours, Tour } from '@/firebaseConfig';
 import { FaPhone, FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import Link from "next/link";
-
-const tours = [
-  {
-    id: 1,
-    name: "Khám Phá Cao Nguyên",
-    image: "/images/tour1.jpg",
-    rating: 4.5,
-    time: "3 ngày 2 đêm",
-    price: "3,500,000",
-    khoihanh: "Thứ 6 hàng tuần",
-  },
-  {
-    id: 2,
-    image: "/images/tour2.jpg",
-    name: "Hành Trình Sapa",
-    rating: 4.8,
-    time: "2 ngày 1 đêm",
-    price: "2,500,000",
-    khoihanh: "Thứ 7 hàng tuần",
-  },
-  {
-    id: 3,
-    name: "Đà Lạt Vào Mùa Hoa",
-    image: "/images/tour3.jpg",
-    rating: 4.7,
-    time: "3 ngày 2 đêm",
-    price: "3,000,000",
-    khoihanh: "Thứ 2 hàng tuần",
-  },
-  {
-    id: 4,
-    name: "Miền Tây Bình Yên",
-    image: "/images/tour1.jpg",
-    rating: 4.6,
-    time: "2 ngày 1 đêm",
-    price: "2,000,000",
-    khoihanh: "Thứ 3 hàng tuần",
-  },
-  {
-    id: 5,
-    name: "Hành Trình Phú Quốc",
-    image: "/images/tour2.jpg",
-    rating: 4.9,
-    time: "3 ngày 2 đêm",
-    price: "4,000,000",
-    khoihanh: "Thứ 4 hàng tuần",
-  },
-  {
-    id: 6,
-    name: "Hành Trình Phan Thiết",
-    image: "/images/tour3.jpg",
-    rating: 4.4,
-    time: "2 ngày 1 đêm",
-    price: "2,500,000",
-    khoihanh: "Thứ 5 hàng tuần",
-  },
-];
 
 const renderStars = (rating: number) => {
   const stars = [];
@@ -74,6 +20,17 @@ const renderStars = (rating: number) => {
 };
 
 const ListTour = () => {
+  const [tours, setTours] = useState<Tour[]>([]);
+
+  useEffect(() => {
+    const getTours = async () => {
+      const toursData = await fetchTours();
+      setTours(toursData);
+    };
+
+    getTours();
+  }, []);
+
   return (
     <section id="tour-section" className="my-4 md:my-36 px-4">
       <div className="flex flex-row justify-between items-center mb-4">
@@ -116,9 +73,9 @@ const ListTour = () => {
                     </p>
                   </div>
                   <div>
-                    <p className="text-gray-600 mb-1">{tour.time}</p>
+                    <p className="text-gray-600 mb-1">{tour.duration}</p>
                     <p className="text-gray-600 mb-1">{tour.price}</p>
-                    <p className="text-gray-600 mb-4">{tour.khoihanh}</p>
+                    <p className="text-gray-600 mb-4">{tour.departure}</p>
                   </div>
                 </div>
                 <div className="flex justify-center mt-4">

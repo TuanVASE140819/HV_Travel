@@ -1,13 +1,40 @@
-import Image from 'next/image';
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
+import { collection, addDoc } from 'firebase/firestore';
+import { firestore } from '@/firebaseConfig';
 import Input from './Input';
 
+interface ContactInfo {
+  name: string;
+  email: string;
+  message: string;
+}
+
 const Contact: React.FC = () => {
+  const [contact, setContact] = useState<ContactInfo>({ name: '', email: '', message: '' });
+  const [popupMessage, setPopupMessage] = useState<string | null>(null);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setContact((prevContact) => ({ ...prevContact, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await addDoc(collection(firestore, 'contacts'), contact);
+      setContact({ name: '', email: '', message: '' }); // Reset form
+      setPopupMessage('Gửi tin nhắn thành công!');
+    } catch (error) {
+      setPopupMessage('Gửi tin nhắn thất bại. Vui lòng thử lại.');
+    }
+  };
+
   return (
     <section id="contact-section" className="my-36 px-4">
       <div className="flex flex-wrap lg:flex-nowrap space-y-8 lg:space-y-0">
-        {/* Phần thông tin liên hệ */}
-        <div className="w-full lg:w-1/2 text-xl pr-0 lg:pr-4">
+          <div className="w-full lg:w-1/2 text-xl pr-0 lg:pr-4">
           <h2 className="font-bold mb-4">Liên hệ</h2>
           <p>Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn!</p>
           <nav>
@@ -44,7 +71,6 @@ const Contact: React.FC = () => {
               </li>
             </ul>
           </nav>
-          {/* Đường line */}
           <div className="border-b-2 border-gray-300 pt-6 w-full lg:w-1/2"></div>
           <h2 className="text-xl font-bold mt-4 mb-4">Theo dõi chúng tôi</h2>
           <div className="flex space-x-4">
@@ -60,18 +86,16 @@ const Contact: React.FC = () => {
           </div>
         </div>
         
-        {/* Phần form gửi tin nhắn */}
         <div className="w-full lg:w-1/2 text-xl pl-0 lg:pl-4">
           <div className="bg-white rounded-lg shadow-lg p-8 w-full">
             <h2 className="text-2xl font-semibold mb-6">Gửi tin nhắn</h2>
-            <form>
-              <Input label="Tên" name="name" />
-              <Input label="Email" name="email" type="email" />
-              <Input label="Tin nhắn" name="message" type="textarea" width="w-full" height="h-32" />
+            <form onSubmit={handleSubmit}>
+              <Input label="Tên" name="name" type="text" value={contact.name} onChange={handleChange} />
+              <Input label="Email" name="email" type="email" value={contact.email} onChange={handleChange} />
+              <Input label="Tin nhắn" name="message" type="textarea" value={contact.message} onChange={handleChange} />
               <p className="text-gray-500 text-base mt-4">
                 Hoặc điền vào form liên hệ và chúng tôi sẽ phản hồi bạn trong vòng 1-2 ngày kể từ ngày nhận được thông tin.
               </p>
-              {/* Nút Gửi */}
               <div className="flex justify-end">
                 <button 
                   type="submit" 
@@ -84,6 +108,13 @@ const Contact: React.FC = () => {
           </div>
         </div>
       </div>
+      {popupMessage && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded shadow-lg">
+            {popupMessage}
+          </div>
+        </div>
+      )}
     </section>
   );
 };

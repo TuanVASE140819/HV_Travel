@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { FaPhone } from 'react-icons/fa';
 
 const tours = [
-  { id: 1, name: "Khám Phá Cao Nguyên", image: "/images/tour1.jpg", rating: 4.5, time: "3 ngày 2 đêm", price: "3,500,000", khoihanh: "Thứ 6 hàng tuần" },
+  { id: "jCnvhUArwoADIcbKK5PO", name: "Khám Phá Cao Nguyên", image: "/images/tour1.jpg", rating: 4.5, time: "3 ngày 2 đêm", price: "3,500,000", khoihanh: "Thứ 6 hàng tuần" },
   { id: 2, name: "Hành Trình Sapa", image: "/images/tour2.jpg", rating: 4.8, time: "2 ngày 1 đêm", price: "2,500,000", khoihanh: "Thứ 7 hàng tuần" },
   { id: 3, name: "Đà Lạt Vào Mùa Hoa", image: "/images/tour3.jpg", rating: 4.7, time: "3 ngày 2 đêm", price: "3,000,000", khoihanh: "Thứ 2 hàng tuần" },
   { id: 4, name: "Miền Tây Bình Yên", image: "/images/tour1.jpg", rating: 4.6, time: "2 ngày 1 đêm", price: "2,000,000", khoihanh: "Thứ 3 hàng tuần" },
@@ -16,7 +16,7 @@ const tours = [
 
 const TourDetailPage = () => {
   const { id } = useParams();
-  const tour = tours.find((tour) => tour.id === Number(id));
+  const tour = tours.find((tour) => tour.id === id);
 
   if (!tour) {
     return <div>Không tìm thấy tour.</div>;

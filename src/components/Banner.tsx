@@ -4,26 +4,14 @@ import React, { useState, useEffect, useCallback } from "react";
 import Image from 'next/image';
 import { useSwipeable } from 'react-swipeable';
 import "../styles/slider.css";
+import { fetchBanners } from '../firebaseConfig';
 
-const Banner: React.FC = () => {
-  const slides = [
-    {
-      title: "Welcome to Our Tours",
-      description: "Discover amazing places with us.",
-      image: "/images/banner1.jpg",
-    },
-    {
-      title: "Explore the World",
-      description: "Join us for an unforgettable adventure.",
-      image: "/images/banner1.jpg",
-    },
-    {
-      title: "Adventure Awaits",
-      description: "Find your next destination with us.",
-      image: "/images/banner1.jpg",
-    },
-  ];
+interface Banner {
+  image: string;
+}
 
+const BannerComponent: React.FC = () => {
+  const [slides, setSlides] = useState<Banner[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const length = slides.length;
 
@@ -40,6 +28,14 @@ const Banner: React.FC = () => {
     return () => clearInterval(interval);
   }, [nextSlide]);
 
+  useEffect(() => {
+    const fetchSlides = async () => {
+      const data: Banner[] = await fetchBanners();
+      setSlides(data);
+    };
+    fetchSlides();
+  }, []);
+
   const goToSlide = (index: number) => {
     setCurrentIndex(index);
   };
@@ -51,8 +47,7 @@ const Banner: React.FC = () => {
   });
 
   return (
-    <section className="slider mt-24"
-     {...handlers}>
+    <section className="slider mt-24" {...handlers}>
       <div
         className="slider-inner"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -61,7 +56,7 @@ const Banner: React.FC = () => {
           <div key={index} className="slide">
             <Image
               src={slide.image}
-              alt={slide.title}
+              alt={`Slide ${index}`}
               width={1920}
               height={1080}
             />
@@ -84,4 +79,4 @@ const Banner: React.FC = () => {
   );
 };
 
-export default Banner;
+export default BannerComponent;

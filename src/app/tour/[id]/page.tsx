@@ -1,11 +1,13 @@
+
 'use client';
 
 import { useParams } from 'next/navigation';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import Banner from '@/components/Banner';
-import { FaPhone, FaRegStar, FaStar, FaStarHalfAlt } from 'react-icons/fa';
 import Link from 'next/link';
+import { FaPhone, FaRegStar, FaStar, FaStarHalfAlt } from 'react-icons/fa';
+import { fetchTours, Tour } from '@/firebaseConfig';
+
 
 const tours = [
   { id: 1, name: "Khám Phá Cao Nguyên", image: "/images/tour1.jpg", rating: 4.5, time: "3 ngày 2 đêm", price: "3,500,000", khoihanh: "Thứ 6 hàng tuần" },
@@ -18,7 +20,40 @@ const tours = [
 
 const TourDetailPage = () => {
   const { id } = useParams();
-  const tour = tours.find((tour) => tour.id === Number(id));
+  const [tour, setTour] = useState<Tour | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const getTourData = async () => {
+      try {
+        const tours = await fetchTours();
+        const foundTour = tours.find((tour) => tour.id === id);
+        if (foundTour) {
+          setTour(foundTour);
+        } else {
+          setError('Không tìm thấy tour.');
+        }
+      } catch (err) {
+        setError('Có lỗi xảy ra khi tải dữ liệu.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getTourData();
+
+  }, [id]);
+
+
+  console.log(tour);
+  if (loading) {
+    return <div>Đang tải...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   if (!tour) {
     return <div>Không tìm thấy tour.</div>;
@@ -37,105 +72,96 @@ const TourDetailPage = () => {
     }
     return stars;
   };
+
   return (
     <>
-     {/* <Banner/> */}
-     <div className="container mx-auto my-4 mt-36 px-4">
-    {/* Tour Header */}
-      <div className="flex flex-col md:flex-row items-center md:items-start gap-4">
-      <div className="w-full md:w-1/2 flex flex-row gap-4">
-      <div className="relative w-[35rem] h-[35rem]">
-  <img
-    src={tour.image}
-    alt={tour.name}
-    className=" w-full h-[30rem] rounded-3xl"
-  />
-</div>
-<div className="flex flex-col gap-2 ">
-    {[1, 2, 3,4].map((i) => (
-      
-      <img
-        key={i}
-        src={`/images/tour${i}.jpg`}
-        alt={`Thumbnail ${i}`}
-        className="rounded-3xl object-cover w-28 h-28"
-      />
-    ))}
-  </div>
-  </div>
-  
-      <div className="w-full md:w-1/2 ">
-      <div className="flex items-center">
-          <span className="text-yellow-500 text-lg">{"★".repeat(Math.round(tour.rating))}</span>
-        </div>
-        <h1 className="text-3xl font-bold">{tour.name}</h1>
-      <div className="flex text-2xl mt-2">
-      <div className="flex justify-between">
-                  <div className="mr-4">
-                    <p className="text-gray-600 mb-1">
-                      <span className="font-semibold">Thời gian:</span>
-                    </p>
-                    <p className="text-gray-600 mb-1">
-                      <span className="font-semibold">Giá:</span>
-                    </p>
-                    <p className="text-gray-600 mb-1">
-                      <span className="font-semibold">Khởi hành:</span>
-                    </p>
-                    <p className="text-gray-600 mb-4">
-                      <span className="font-semibold">Địa chỉ:</span>
-                    </p>
-                    
-                  </div>
-                  <div>
-                    <p className="text-gray-600 mb-1">{tour.time}</p>
-                    <p className="text-gray-600 mb-1">{tour.price}</p>
-                    <p className="text-gray-600 mb-4">{tour.khoihanh}</p>
-                  </div>
-                  
+      {/* Tour Details */}
+      <div className="container mx-auto my-4 mt-36 px-4">
+        <div className="flex flex-col md:flex-row items-center md:items-start gap-4">
+          <div className="w-full md:w-1/2 flex flex-row gap-4">
+            <div className="relative w-[35rem] h-[35rem]">
+              <img
+                src={tour.image}
+                alt={tour.name}
+                className="w-full h-[30rem] rounded-3xl"
+              />
+            </div>
+            <div className="flex flex-col gap-2 ">
+              {[1, 2, 3, 4].map((i) => (
+                <img
+                  key={i}
+                  src={`/images/tour${i}.jpg`}
+                  alt={`Thumbnail ${i}`}
+                  className="rounded-3xl object-cover w-28 h-28"
+                />
+              ))}
+            </div>
+          </div>
+
+          <div className="w-full md:w-1/2">
+            <div className="flex items-center">
+              <span className="text-yellow-500 text-lg">{"★".repeat(Math.round(tour.rating))}</span>
+            </div>
+            <h1 className="text-3xl font-bold">{tour.name}</h1>
+            <div className="flex text-2xl mt-2">
+              <div className="flex justify-between">
+                <div className="mr-4">
+                  <p className="text-gray-600 mb-1">
+                    <span className="font-semibold">Thời gian:</span>
+                  </p>
+                  <p className="text-gray-600 mb-1">
+                    <span className="font-semibold">Giá:</span>
+                  </p>
+                  <p className="text-gray-600 mb-1">
+                    <span className="font-semibold">Khởi hành:</span>
+                  </p>
+                  <p className="text-gray-600 mb-4">
+                    <span className="font-semibold">Địa chỉ:</span>
+                  </p>
                 </div>
-              
-      </div>
-      <div className="w-50 h-[1px] bg-gray-300"></div>
-      <div className="text-2xl mt-2">
-      <div className="text-gray-600  mb-2">
-                      <span className="font-semibold">Liên hệ:</span>
-                    </div>
-                    <div className="flex items-center">
-                      <Image
-                        src="/images/icon_phone.jpg"
-                        alt="Phone"
-                        width={30}
-                        height={30}
-                      />
-                      <span className="ml-2">0931216879</span>
-                    </div>
+                <div>
+                  <p className="text-gray-600 mb-1">{tour.time}</p>
+                  <p className="text-gray-600 mb-1">{tour.price}</p>
+                  <p className="text-gray-600 mb-4">{tour.khoihanh}</p>
+                </div>
+              </div>
+            </div>
+            <div className="w-50 h-[1px] bg-gray-300"></div>
+            <div className="text-2xl mt-2">
+              <div className="text-gray-600 mb-2">
+                <span className="font-semibold">Liên hệ:</span>
+              </div>
+              <div className="flex items-center">
+                <Image
+                  src="/images/icon_phone.jpg"
+                  alt="Phone"
+                  width={30}
+                  height={30}
+                />
+                <span className="ml-2">{tour.phone}</span>
+              </div>
+            </div>
+            <div className="flex mt-4 items-center justify-end">
+              <button className="rounded-full flex items-center shadow-xl bg-[#56c5d7] text-white">
+                <span className="ml-4 text-2xl font-bold">ĐẶT NGAY</span>
+                <span className="ml-2 bg-orange-400 text-white p-4 rounded-full">
+                  <FaPhone />
+                </span>
+              </button>
+            </div>
+          </div>
+
         </div>
-        <div className="flex mt-4 items-center justify-end">
-        <button className="rounded-full flex items-center shadow-xl bg-[#56c5d7] text-white">
-          <span className="ml-4 text-2xl font-bold">ĐẶT NGAY</span>
-          <span className="ml-2 bg-orange-400 text-white p-4 rounded-full">
-            <FaPhone />
-          </span>
-        </button>
-        </div>
-      </div>
-      
-    </div>
-    <div className="w-50 h-[1px] bg-gray-300"></div>
+        <div className="w-50 h-[1px] bg-gray-300"></div>
     {/* Itinerary */}
     <div className="my-8">
       <h2 className="text-xl font-semibold">Điểm nổi bật</h2>
       <ul className="list-disc list-inside ml-4 mt-2">
         {/* chia là 2 phần */}
         <div className="grid grid-cols-2 gap-2 text-gray-600">
-          <li>Tham quan các điểm nổi tiếng tại Los Angeles</li>
-          <li>Đại lộ Hollywood</li>
-          <li>Phim trường Universial</li>
-          <li>Phố người việt (Little Sài Gòn)</li>
-          <li>Thành phố ăn chơi Las Vegas</li>
-          <li>Công viên đá bảy màu</li>
-          <li>Thác nước Grand Canyon</li>
-          <li>Chinh phục núi và hồ tại San Diego</li>
+        {tour.highlights.map((highlight, i) => (
+          <li key={i}>{highlight}</li>
+        ))}
         </div>
 
       </ul>
@@ -143,24 +169,32 @@ const TourDetailPage = () => {
     <div className="w-50 h-[1px] bg-gray-300"></div>
     <div className="mt-8">
       <h2 className="text-xl font-semibold">Lịch trình chi tiết</h2>
-      {[...Array(5)].map((_, i) => (
-    // chia là 2 phần bên trái 1/3 bên phải 2/3
-        <div key={i} className="mt-4 grid grid-cols-3 gap-4">
-          <div className="col-span-1">
+      <ul className="list-disc list-inside ml-4 mt-2">
+      {JSON.parse(tour.itinerary).map((item, i) => (
+          <>
+              <div className="mt-4 grid grid-cols-3 gap-4">
+            <div className="col-span-1">
            
             <img
-              src="/images/tour1.jpg"
+              src={`/images/tour${i + 1}.jpg`}
               alt="Daily Image"
               className='rounded-3xl w-full object'
             />
           </div>
          
           <div className="col-span-2 text-gray-600 ">
-            <h3 className="text-lg font-medium">Ngày {i + 1}: Điểm đến và lịch trình</h3>
-            <p className="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac nulla nec eros ultrices lacinia. Nullam auctor, urna non tincidunt fermentum, dui libero volutpat nunc, a ultricies libero nunc non nunc. Donec vel purus nec sapien ultricies aliquet. Nullam euismod, turpis nec facilisis aliquet, libero turpis tincidunt turpis, nec ultricies purus elit nec lacus. Nullam auctor, urna non tincidunt fermentum, dui libero volutpat nunc, a ultricies libero nunc non nunc. Donec vel purus nec sapien ultricies aliquet. Nullam euismod, turpis nec facilisis aliquet, libero turpis tincidunt turpis, nec ultricies purus elit nec lacus.</p>
+            <h3 className="text-lg font-medium">
+              Ngày {i + 1}: {item.title}
+            </h3>
+            <p className="text-gray-600">
+              {item.content}
+            </p>
           </div>
         </div>
-      ))}
+          </>
+        ))}
+      </ul>
+ 
     </div>
     <div className="mt-8">
     <div className="flex flex-row justify-between items-center mb-4">
@@ -223,10 +257,8 @@ const TourDetailPage = () => {
         ))}
       </div>
     </div>
-  </div>
+      </div>
     </>
-  
-   
   );
 };
 

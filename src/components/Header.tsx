@@ -1,13 +1,17 @@
 "use client";
-
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { fetchLogoURL } from '../firebaseConfig';
-
+import { fetchLogoURL, fetchCompanyIntroductiondata } from '@/firebaseConfig';
+interface CompanyIntroductionData {
+  website: string;
+  phone: string;
+  address: string;
+}
 const Header: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeLink, setActiveLink] = useState<string | null>(null);
   const [logoURL, setLogoURL] = useState<string | null>(null);
+  const [companyInfo, setCompanyInfo] = useState<CompanyIntroductionData[]>([]);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -27,34 +31,45 @@ const Header: React.FC = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetchCompanyIntroductiondata();
+      setCompanyInfo(data);
+    };
+    fetchData();
+  }, []);
 
   return (
     <header className="fixed top-0 left-0 w-full bg-white z-10">
       <div className="flex justify-between items-center container mx-auto p-4">
         {/* Left Section - Logo */}
         <div className="left-section">
-        {logoURL ? (
-        <Image src={logoURL} alt="logo" width={100} height={100} />
-      ) : (
-        <p>Loading...</p>
-      )}
+          {logoURL ? (
+            <Image src={logoURL} alt="logo" width={100} height={100} />
+          ) : (
+            <p>Loading...</p>
+          )}
         </div>
 
         {/* Right Section - Info & Menu Button */}
         <div className="right-section">
           <div className="flex justify-end items-center space-x-4">
-            <div className="hidden md:flex items-center space-x-2 text-sm">
-              <Image src="/images/icon_web.jpg" alt="icon" width={20} height={20} />
-              <span>hvtravel.vn</span>
-            </div>
-            <div className="hidden md:flex items-center space-x-2 text-sm">
-              <Image src="/images/icon_phone.jpg" alt="icon" width={20} height={20} />
-              <span>0931216879</span>
-            </div>
-            <div className="hidden md:flex items-center space-x-2 text-sm">
-              <Image src="/images/icon_location.jpg" alt="icon" width={20} height={20} />
-              <span>12A Ngô Huy Diễn, Phường 5, Đà Lạt, Lâm Đồng</span>
-            </div>
+            {companyInfo.length > 0 && (
+              <>
+                <div className="hidden md:flex items-center space-x-2 text-sm">
+                  <Image src="/images/icon_web.jpg" alt="icon" width={20} height={20} />
+                  <span>{companyInfo[0].website}</span>
+                </div>
+                <div className="hidden md:flex items-center space-x-2 text-sm">
+                  <Image src="/images/icon_phone.jpg" alt="icon" width={20} height={20} />
+                  <span>{companyInfo[0].phone}</span>
+                </div>
+                <div className="hidden md:flex items-center space-x-2 text-sm">
+                  <Image src="/images/icon_location.jpg" alt="icon" width={20} height={20} />
+                  <span>{companyInfo[0].address}</span>
+                </div>
+              </>
+            )}
           </div>
           <button 
             onClick={toggleMenu} 

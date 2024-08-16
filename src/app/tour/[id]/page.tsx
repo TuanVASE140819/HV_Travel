@@ -111,25 +111,25 @@ const TourDetailPage = () => {
       {/* Tour Details */}
       <div className="container mx-auto my-4 mt-36 px-4">
         <div className="flex flex-col md:flex-row items-center md:items-start gap-4">
-          <div className="w-full md:w-1/2 flex flex-row gap-4">
-            <div className="relative w-[35rem] h-[35rem]">
-              <img
-                src={tour.image}
-                alt={tour.name}
-                className="w-full h-[30rem] rounded-3xl"
-              />
-            </div>
-            <div className="flex flex-col gap-2 ">
-              {[1, 2, 3, 4].map((i) => (
-                <img
-                  key={i}
-                  src={`/images/tour${i}.jpg`}
-                  alt={`Thumbnail ${i}`}
-                  className="rounded-3xl object-cover w-28 h-28"
-                />
-              ))}
-            </div>
-          </div>
+        <div className="w-full md:w-1/2 flex flex-col md:flex-row gap-4">
+  <div className="relative w-full md:w-[35rem] h-[35rem]">
+    <img
+      src={tour.image}
+      alt={tour.name}
+      className="w-full h-[30rem] rounded-3xl"
+    />
+  </div>
+  <div className="flex flex-row md:flex-col gap-2">
+  {[1, 2, 3, 4].map((i) => (
+    <img
+      key={i}
+      src={`/images/tour${i}.jpg`}
+      alt={`Thumbnail ${i}`}
+      className="rounded-3xl object-cover w-24 h-24 sm:w-28 sm:h-28"
+    />
+  ))}
+</div>
+</div>
 
           <div className="w-full md:w-1/2">
             <div className="flex items-center">
@@ -204,38 +204,36 @@ const TourDetailPage = () => {
       <div className="mt-8">
   <h2 className="text-xl font-semibold">Lịch trình chi tiết</h2>
   <ul className="list-disc list-inside ml-4 mt-2">
-    {(() => {
-      try {
-        const itinerary = JSON.parse(tour.itinerary);
-        return itinerary.map((item: { title: string; content: string }, i: number) => (
-          <React.Fragment key={i}>
-            <div className="mt-4 grid grid-cols-3 gap-4">
+  {(() => {
+    try {
+      const itinerary = JSON.parse(tour.itinerary);
+      return itinerary.map((item: { title: string; content: string }, i: number) => (
+        <React.Fragment key={i}>
+          <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="col-span-1">
-           
-           <img
-             src={`/images/tour${i + 1}.jpg`}
-             alt="Daily Image"
-             className='rounded-3xl w-full object'
-           />
-         </div>
-         <div className="col-span-2 text-gray-600 ">
-            <h3 className="text-lg font-medium">
-              Ngày {i + 1}: {item.title}
-            </h3>
-            <p className="text-gray-600">
-              {item.content}
-            </p>
-          </div>
-            
+              <img
+                src={`/images/tour${i + 1}.jpg`}
+                alt="Daily Image"
+                className="rounded-3xl w-full object"
+              />
             </div>
-          </React.Fragment>
-        ));
-      } catch (e) {
-        console.error("Invalid JSON in tour.itinerary", e);
-        return <li>Invalid itinerary data</li>;
-      }
-    })()}
-  </ul>
+            <div className="col-span-2 text-gray-600">
+              <h3 className="text-lg font-medium">
+                Ngày {i + 1}: {item.title}
+              </h3>
+              <p className="text-gray-600">
+                {item.content}
+              </p>
+            </div>
+          </div>
+        </React.Fragment>
+      ));
+    } catch (e) {
+      console.error("Invalid JSON in tour.itinerary", e);
+      return <li>Invalid itinerary data</li>;
+    }
+  })()}
+</ul>
 </div>
    
     <div className="mt-8">

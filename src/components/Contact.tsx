@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { collection, addDoc } from 'firebase/firestore';
-import { firestore } from '@/firebaseConfig';
+import { firestore, fetchCompanyIntroductiondata } from '@/firebaseConfig';
 import Input from './Input';
 
 interface ContactInfo {
@@ -11,9 +11,25 @@ interface ContactInfo {
   message: string;
 }
 
+interface CompanyIntroductionData {
+  address: string;
+  gmail: string;
+  phone: string;
+  website: string;
+}
+
 const Contact: React.FC = () => {
   const [contact, setContact] = useState<ContactInfo>({ name: '', email: '', message: '' });
   const [popupMessage, setPopupMessage] = useState<string | null>(null);
+  const [companyInfo, setCompanyInfo] = useState<CompanyIntroductionData[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetchCompanyIntroductiondata();
+      setCompanyInfo(data);
+    };
+    fetchData();
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -34,16 +50,22 @@ const Contact: React.FC = () => {
   return (
     <section id="contact-section" className="my-36 px-4">
       <div className="flex flex-wrap lg:flex-nowrap space-y-8 lg:space-y-0">
-          <div className="w-full lg:w-1/2 text-xl pr-0 lg:pr-4">
+        <div className="w-full lg:w-1/2 text-xl pr-0 lg:pr-4">
           <h2 className="font-bold mb-4">Liên hệ</h2>
           <p>Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn!</p>
-          <nav>
+          {companyInfo.map((info, index) => (
+            <div key={index}>
+              <>
+             
+              <nav>
             <ul className="mt-4 flex items-center">
               <li>
                 <img src="/images/icon_web.jpg" alt="phone" className="w-5 h-5 inline-block mr-2" /> 
               </li>
               <li>
-                <a href="#" className="hover:underline">hvtravel.vn</a>
+                <a href="#" className="hover:underline">
+                  {info.website}
+                </a>
               </li>
             </ul>
             <ul className="mt-4 flex items-center">
@@ -51,7 +73,9 @@ const Contact: React.FC = () => {
                 <img src="/images/icon_phone.jpg" alt="phone" className="w-5 h-5 inline-block mr-2" /> 
               </li>
               <li>
-                <a href="#" className="hover:underline">0931216879</a>
+                <a href="#" className="hover:underline">
+                  {info.phone}
+                </a>
               </li>
             </ul>
             <ul className="mt-4 flex items-center">
@@ -59,7 +83,9 @@ const Contact: React.FC = () => {
                 <img src="/images/icon_email.jpg" alt="phone" className="w-5 h-5 inline-block mr-2" /> 
               </li>
               <li>
-                <a href="#" className="hover:underline">hvtravel@gmail.com</a> 
+                <a href="#" className="hover:underline">
+                  {info.gmail}
+                  </a> 
               </li>
             </ul>
             <ul className="mt-4 flex items-center">
@@ -67,10 +93,17 @@ const Contact: React.FC = () => {
                 <img src="/images/icon_location.jpg" alt="phone" className="w-5 h-5 inline-block mr-2" /> 
               </li>
               <li>
-                <a href="#" className="hover:underline">12A Ngô Huy Diễn, phường 5 Đà Lạt, Lâm Đồng</a> 
+                <a href="#" className="hover:underline">
+                  {info.address}
+                  </a> 
               </li>
             </ul>
           </nav>
+              </>
+           
+            </div>
+          ))}
+          
           <div className="border-b-2 border-gray-300 pt-6 w-full lg:w-1/2"></div>
           <h2 className="text-xl font-bold mt-4 mb-4">Theo dõi chúng tôi</h2>
           <div className="flex space-x-4">

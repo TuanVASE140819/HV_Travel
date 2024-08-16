@@ -128,12 +128,12 @@ const ListTour = () => {
                   </div>
                 </div>
                 <div className="flex justify-center mt-4">
-                  <Link
-                    href={`/tour/${tour.id}`}
-                    className="bg-blue-300 text-white text-sm font-semibold py-2 px-10 rounded-full"
-                  >
-                    Chi tiết
-                  </Link>
+                <Link
+  href={`/tour/${tour.id}`}
+  className="bg-blue-300 text-white text-sm font-semibold py-2 px-10 rounded-full hover:bg-blue-400 hover:text-gray-100"
+>
+  Chi tiết
+</Link>
                 </div>
               </div>
             </div>

@@ -25,6 +25,14 @@ export interface CompanyIntroduction {
   content: string;
   imageUrl: string;
 }
+
+export interface CompanyIntroductionData {
+  address: string;
+  gmail: string;
+  phone: string;
+  website: string;
+}
+
   
 export const fetchLogoURL = async (): Promise<string> => {
     const storageRef =
@@ -75,6 +83,22 @@ export const fetchLogoURL = async (): Promise<string> => {
         content: data.content,
         imageUrl: data.imageUrl,
       } as CompanyIntroduction;
+    }
+    );
+    return companyIntroductionList;
+  }
+
+  export const fetchCompanyIntroductiondata = async (): Promise<CompanyIntroductionData[]> => {
+    const companyIntroductionDoc = collection(firestore, 'companyInfo'); 
+    const companyIntroductionSnapshot = await getDocs(companyIntroductionDoc);
+    const companyIntroductionList = companyIntroductionSnapshot.docs.map(doc => {
+      const data = doc.data();
+      return {
+        address: data.address,
+        gmail: data.gmail,
+        phone: data.phone,
+        website: data.website,
+      } as CompanyIntroductionData;
     }
     );
     return companyIntroductionList;

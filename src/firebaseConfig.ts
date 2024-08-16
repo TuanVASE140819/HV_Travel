@@ -20,6 +20,11 @@ export interface Tour {
     itinerary: string;//lich trinh
     phone: string;
   }
+
+export interface CompanyIntroduction {
+  content: string;
+  imageUrl: string;
+}
   
 export const fetchLogoURL = async (): Promise<string> => {
     const storageRef =
@@ -61,6 +66,19 @@ export const fetchLogoURL = async (): Promise<string> => {
     return toursList;
   };
 
+  export const fetchCompanyIntroduction = async (): Promise<CompanyIntroduction[]> => {
+    const companyIntroductionDoc = collection(firestore, 'companyIntroduction'); 
+    const companyIntroductionSnapshot = await getDocs(companyIntroductionDoc);
+    const companyIntroductionList = companyIntroductionSnapshot.docs.map(doc => {
+      const data = doc.data();
+      return {
+        content: data.content,
+        imageUrl: data.imageUrl,
+      } as CompanyIntroduction;
+    }
+    );
+    return companyIntroductionList;
+  }
 const firebaseConfig = {
   apiKey: "AIzaSyD6HimCyz13Y9ew856k5kohK7G5LJGgrlM",
   authDomain: "travel-123-48553.firebaseapp.com",

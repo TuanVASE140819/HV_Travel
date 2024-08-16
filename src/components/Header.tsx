@@ -45,9 +45,15 @@ const Header: React.FC = () => {
         {/* Left Section - Logo */}
         <div className="left-section">
           {logoURL ? (
-            <Image src={logoURL} alt="logo" width={100} height={100} />
+               <a
+               href="/"  
+             >
+               <Image src={logoURL} alt="logo" width={100} height={100} />
+             </a>
           ) : (
-            <p>Loading...</p>
+            <div className='animate-pulse'>
+              <div className="bg-gray-200 h-10 w-16  animate-pulse" />
+            </div>
           )}
         </div>
 

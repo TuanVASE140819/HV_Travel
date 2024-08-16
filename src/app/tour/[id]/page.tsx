@@ -20,7 +20,7 @@ const tours = [
 
 const Skeleton = () => (
   <div className="animate-pulse">
-    <div className="container mx-auto my-4 mt-36 px-4">
+    <div className="container mx-auto my-4 mt-36 px-20">
       <div className="flex flex-col md:flex-row items-center md:items-start gap-4">
         <div className="w-full md:w-1/2 flex flex-row gap-4">
           <div className="w-[35rem] h-[35rem] bg-gray-300 rounded-3xl"></div>
@@ -109,7 +109,7 @@ const TourDetailPage = () => {
   return (
     <>
       {/* Tour Details */}
-      <div className="container mx-auto my-4 mt-36 px-4">
+      <div className="container mx-auto my-4 mt-36 px-20">
         <div className="flex flex-col md:flex-row items-center md:items-start gap-4">
         <div className="w-full md:w-1/2 flex flex-col md:flex-row gap-4">
   <div className="relative w-full md:w-[35rem] h-[35rem]">

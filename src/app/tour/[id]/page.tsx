@@ -207,7 +207,7 @@ const TourDetailPage = () => {
     {(() => {
       try {
         const itinerary = JSON.parse(tour.itinerary);
-        return itinerary.map((item, i) => (
+        return itinerary.map((item: { title: string; content: string }, i: number) => (
           <React.Fragment key={i}>
             <div className="mt-4 grid grid-cols-3 gap-4">
             <div className="col-span-1">

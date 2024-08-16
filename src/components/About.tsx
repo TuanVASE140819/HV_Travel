@@ -81,6 +81,7 @@ const About: React.FC = () => {
               </div>
             </div> 
             <div className="flex flex-wrap mt-2">
+              
               <h4 className="font-semibold w-full sm:w-1/3">Giá cả hợp lý:</h4>
               <div className="w-full sm:w-2/3 ml-auto">
                 <p>

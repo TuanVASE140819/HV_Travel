@@ -32,7 +32,7 @@ const Skeleton = () => (
             <div className="object-cover rounded-3xl w-full h-64 bg-gray-300"></div>
           </div>
           <div className="flex justify-center items-center">
-            <div className="relative p-8 bg-white rounded-3xl shadow-lg -mt-12 mx-4 z-6 w-full md:w-3/4">
+            <div className="relative p-8 bg-white rounded-3xl shadow-lg -mt-12 mx-2 z-6 w-full md:w-4/5">
               <div className="flex mb-2">
                 {[1, 2, 3, 4, 5].map((j) => (
                   <div key={j} className="h-4 bg-gray-300 rounded w-6 mr-2"></div>
@@ -105,7 +105,7 @@ const ListTour = () => {
 
             {/* Content Section */}
             <div className="flex justify-center items-center">
-              <div className="relative p-8 bg-white rounded-3xl shadow-lg -mt-12 mx-4 z-6 w-full md:w-3/4">
+              <div className="relative p-8 bg-white rounded-3xl shadow-lg -mt-12 mx-2 z-6 w-full md:w-11/12">
                 {/* Rating */}
                 <div className="flex mb-2">{renderStars(tour.rating)}</div>
                 <h3 className="text-xl font-bold mb-2">{tour.name}</h3>

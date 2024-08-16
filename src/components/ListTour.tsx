@@ -81,7 +81,7 @@ const ListTour = () => {
   }
 
   return (
-    <section id="tour-section" className="my-4 md:my-36 px-20">
+    <section id="tour-section" className="my-4 md:my-16 px-20">
       <div className="flex flex-row justify-between items-center mb-4">
         <h1 className="text-2xl font-bold mb-4">Tours</h1>
         <button className="rounded-full flex items-center shadow-xl">
@@ -105,7 +105,7 @@ const ListTour = () => {
 
             {/* Content Section */}
             <div className="flex justify-center items-center">
-              <div className="relative p-8 bg-white rounded-3xl shadow-lg -mt-12 mx-2 z-6 w-full md:w-11/12">
+              <div className="relative p-8 bg-white rounded-3xl shadow-lg -mt-12 mx-2 z-6 w-full md:w-3/4">
                 {/* Rating */}
                 <div className="flex mb-2">{renderStars(tour.rating)}</div>
                 <h3 className="text-xl font-bold mb-2">{tour.name}</h3>

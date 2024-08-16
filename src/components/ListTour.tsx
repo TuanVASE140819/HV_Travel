@@ -81,7 +81,7 @@ const ListTour = () => {
   }
 
   return (
-    <section id="tour-section" className="my-4 md:my-36 px-4">
+    <section id="tour-section" className="my-4 md:my-36 px-20">
       <div className="flex flex-row justify-between items-center mb-4">
         <h1 className="text-2xl font-bold mb-4">Tours</h1>
         <button className="rounded-full flex items-center shadow-xl">

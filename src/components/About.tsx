@@ -39,7 +39,7 @@ const About: React.FC = () => {
   }, []);
 
   return (
-    <section id="about-section" className="my-4 md:my-36 px-4">
+    <section id="about-section" className="my-4 md:my-36 px-20">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">Về chúng tôi</h1>
       </div>

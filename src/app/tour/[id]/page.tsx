@@ -21,7 +21,7 @@ const tours = [
 const Skeleton = () => (
   <div className="animate-pulse">
     <div className="container mx-auto my-4 mt-36 px-20">
-      <div className="flex flex-col md:flex-row items-center md:items-start gap-4">
+      <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
         <div className="w-full md:w-1/2 flex flex-row gap-4">
           <div className="w-[35rem] h-[35rem] bg-gray-300 rounded-3xl"></div>
           <div className="flex flex-col gap-2">
@@ -109,8 +109,8 @@ const TourDetailPage = () => {
   return (
     <>
       {/* Tour Details */}
-      <div className="container mx-auto my-4 mt-36 px-20">
-        <div className="flex flex-col md:flex-row items-center md:items-start gap-4">
+      <div className="container mx-auto my-4 mt-36 md:px-56 px-4">
+        <div className="flex flex-col md:flex-row items-center md:items-start gap-24">
         <div className="w-full md:w-1/2 flex flex-col md:flex-row gap-4">
   <div className="relative w-full md:w-[35rem] h-[35rem]">
     <img
@@ -120,14 +120,15 @@ const TourDetailPage = () => {
     />
   </div>
   <div className="flex flex-row md:flex-col gap-2">
-  {[1, 2, 3, 4].map((i) => (
-    <img
-      key={i}
-      src={`/images/tour${i}.jpg`}
-      alt={`Thumbnail ${i}`}
-      className="rounded-3xl object-cover w-24 h-24 sm:w-28 sm:h-28"
-    />
-  ))}
+  {tour.images?.map((image: string, index: number) => (
+               <img
+                key={index} 
+                src={image}
+                alt={`Thumbnail ${index}`} 
+
+               className="rounded-3xl object-cover w-24 h-24 sm:w-28 sm:h-28"
+             />
+            ))}
 </div>
 </div>
 
@@ -135,24 +136,24 @@ const TourDetailPage = () => {
             <div className="flex items-center">
               <span className="text-yellow-500 text-lg">{"★".repeat(Math.round(tour.rating))}</span>
             </div>
-            <h1 className="text-3xl font-bold">{tour.name}</h1>
+            <h1 className="text-2xl font-bold">{tour.name}</h1>
             <div className="flex text-2xl mt-2">
               <div className="flex justify-between">
                 <div className="mr-4">
-                  <p className="text-gray-600 mb-1">
+                  <p className="text-lg text-gray-600 mb-1">
                     <span className="font-semibold">Thời gian:</span>
                   </p>
-                  <p className="text-gray-600 mb-1">
+                  <p className="text-lg text-gray-600 mb-1">
                     <span className="font-semibold">Giá:</span>
                   </p>
-                  <p className="text-gray-600 mb-1">
+                  <p className=" text-lg text-gray-600 mb-1">
                     <span className="font-semibold">Khởi hành:</span>
                   </p>
-                  <p className="text-gray-600 mb-4">
+                  <p className=" text-lg text-gray-600 mb-4">
                     <span className="font-semibold">Địa chỉ:</span>
                   </p>
                 </div>
-                <div>
+                <div className='text-lg'>
                   <p className="text-gray-600 mb-1">{tour.duration}</p>
                   <p className="text-gray-600 mb-1">{tour.price}</p>
                   <p className="text-gray-600 mb-1">{tour.departure}</p>     
@@ -162,7 +163,7 @@ const TourDetailPage = () => {
             </div>
             <div className="w-50 h-[1px] bg-gray-300"></div>
             <div className="text-2xl mt-2">
-              <div className="text-gray-600 mb-2">
+              <div className="text-lg text-gray-600 mb-2">
                 <span className="font-semibold">Liên hệ:</span>
               </div>
               <div className="flex items-center">
@@ -172,7 +173,7 @@ const TourDetailPage = () => {
                   width={30}
                   height={30}
                 />
-                <span className="ml-2">{tour.phone}</span>
+                <span className="text-lg ml-2">{tour.phone}</span>
               </div>
             </div>
             <div className="flex mt-4 items-center justify-end">

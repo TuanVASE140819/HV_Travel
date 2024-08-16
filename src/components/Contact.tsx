@@ -48,7 +48,7 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <section id="contact-section" className="my-36 px-4">
+    <section id="contact-section"  className="my-4 md:my-16 md:px-56 px-4">
       <div className="flex flex-wrap lg:flex-nowrap space-y-8 lg:space-y-0">
         <div className="w-full lg:w-1/2 text-xl pr-0 lg:pr-4">
           <h2 className="font-bold mb-4">Liên hệ</h2>

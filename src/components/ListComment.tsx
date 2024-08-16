@@ -84,7 +84,7 @@ const CommentSlider = () => {
   };
 
   return (
-    <section id="feedback-section" className="my-4 md:my-16 px-20">
+    <section id="feedback-section"  className="my-4 md:my-16 md:px-56 px-4">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">Feedback</h1>
       </div>

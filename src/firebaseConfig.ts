@@ -9,6 +9,7 @@ export interface Tour {
     id: string;
     name: string;
     image: string;
+    images: string[];
     time: string;
     price: string;
     khoihanh: string;
@@ -59,6 +60,7 @@ export const fetchLogoURL = async (): Promise<string> => {
         id: doc.id,
         name: data.name,
         image: data.image,
+        images: data.images,
         time: data.time,
         price: data.price,
         khoihanh: data.khoihanh,

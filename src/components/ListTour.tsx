@@ -81,9 +81,9 @@ const ListTour = () => {
   }
 
   return (
-    <section id="tour-section" className="my-4 md:my-16 px-20">
+    <section id="tour-section" className="my-4 md:my-16 md:px-56 px-4">
       <div className="flex flex-row justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold mb-4">Tours</h1>
+        <h1 className="text-xl font-bold mb-4">Tours</h1>
         <button className="rounded-full flex items-center shadow-xl">
           <span className="ml-4 font-bold">ĐẶT NGAY</span>
           <span className="ml-2 bg-orange-400 text-white p-2 rounded-full">
@@ -111,23 +111,23 @@ const ListTour = () => {
                 <h3 className="text-xl font-bold mb-2">{tour.name}</h3>
                 <div className="flex justify-between">
                   <div>
-                    <p className="text-gray-600 mb-1">
+                    <p className="text-gray-600 text-sm mb-1">
                       <span className="font-semibold">Thời gian:</span>
                     </p>
-                    <p className="text-gray-600 mb-1">
+                    <p className="text-gray-600 text-sm mb-1">
                       <span className="font-semibold">Giá:</span>
                     </p>
-                    <p className="text-gray-600 mb-4">
+                    <p className="text-gray-600 text-sm  mb-4">
                       <span className="font-semibold">Khởi hành:</span>
                     </p>
                   </div>
                   <div>
-                    <p className="text-gray-600 mb-1">{tour.duration}</p>
-                    <p className="text-gray-600 mb-1">{tour.price}</p>
-                    <p className="text-gray-600 mb-4">{tour.departure}</p>
+                    <p className="text-gray-600 text-sm mb-1">{tour.duration}</p>
+                    <p className="text-gray-600 text-sm mb-1">{tour.price}</p>
+                    <p className="text-gray-600 text-sm mb-4">{tour.departure}</p>
                   </div>
                 </div>
-                <div className="flex justify-center mt-4">
+                <div className="flex justify-center md:mt-2 mt-4">
                 <Link
   href={`/tour/${tour.id}`}
   className="bg-blue-300 text-white text-sm font-semibold py-2 px-10 rounded-full hover:bg-blue-400 hover:text-gray-100"

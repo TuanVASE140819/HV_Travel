@@ -6,89 +6,56 @@ import { FaPhone, FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import Link from "next/link";
 import Image from 'next/image';
 import useFadeInOnScroll from './useFadeInOnScroll';
-import { motion } from 'framer-motion';
+import { motion, useAnimation } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
 
 const renderStars = (rating: number) => {
   const stars = [];
   for (let i = 1; i <= 5; i++) {
     if (i <= rating) {
       stars.push(
-       <>
         <Image
           key={i}
-              src="/images/star_full.png"
+          src="/images/star_full.png"
           alt="star"
           width={20}
           height={20}
           className="mr-2"
-        /></>
+        />
       );
     } else if (i - rating < 1) {
       stars.push(<FaStarHalfAlt key={i} className="text-yellow-500 mr-2" />);
     } else {
       stars.push(
-        <>
         <Image
           key={i}
-              src="/images/star_null.png"
+          src="/images/star_null.png"
           alt="star"
           width={20}
           height={20}
           className="mr-2"
-        /></>
+        />
       );
     }
   }
   return stars;
 };
 
-const Skeleton = () => (
-  <div className="animate-pulse">
-    <div className="flex flex-row justify-between items-center mb-4">
-      <div className="h-8 bg-gray-300 rounded w-1/4"></div>
-      <div className="h-8 bg-gray-300 rounded w-1/4"></div>
-    </div>
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {[1, 2, 3].map((i) => (
-        <div key={i} className="relative mb-8">
-          <div className="relative flex justify-center items-center">
-            <div className="object-cover rounded-3xl w-full h-64 bg-gray-300"></div>
-          </div>
-          <div className="flex justify-center items-center">
-            <div className="relative p-8 bg-white rounded-3xl shadow-lg -mt-12 mx-2 z-6 w-full md:w-4/5">
-              <div className="flex mb-2">
-                {[1, 2, 3, 4, 5].map((j) => (
-                  <div key={j} className="h-4 bg-gray-300 rounded w-6 mr-2"></div>
-                ))}
-              </div>
-              <div className="h-6 bg-gray-300 rounded w-3/4 mb-2"></div>
-              <div className="flex justify-between">
-                <div>
-                  <div className="h-4 bg-gray-300 rounded w-1/2 mb-1"></div>
-                  <div className="h-4 bg-gray-300 rounded w-1/2 mb-1"></div>
-                  <div className="h-4 bg-gray-300 rounded w-1/2 mb-4"></div>
-                </div>
-                <div>
-                  <div className="h-4 bg-gray-300 rounded w-1/2 mb-1"></div>
-                  <div className="h-4 bg-gray-300 rounded w-1/2 mb-1"></div>
-                  <div className="h-4 bg-gray-300 rounded w-1/2 mb-4"></div>
-                </div>
-              </div>
-              <div className="flex justify-center mt-4">
-                <div className="h-8 bg-gray-300 rounded w-1/2"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
-);
-
 const ListTour = () => {
   const [tours, setTours] = useState<Tour[]>([]);
   const [loading, setLoading] = useState(true);
-  const [fadeInRef] = useFadeInOnScroll();
+  const [loadedImages, setLoadedImages] = useState<{ [key: string]: boolean }>({});
+
+  const controls = useAnimation();
+  const { ref, inView } = useInView();
+
+  useEffect(() => {
+    if (inView) {
+      controls.start('visible');
+    } else {
+      controls.start('hidden');
+    }
+  }, [controls, inView]);
 
   useEffect(() => {
     const getTours = async () => {
@@ -100,9 +67,14 @@ const ListTour = () => {
     getTours();
   }, []);
 
-  if (loading) {
-    return <Skeleton />;
-  }
+  const handleImageLoad = (id: string) => {
+    setLoadedImages((prev) => ({ ...prev, [id]: true }));
+  };
+
+  const variants = {
+    visible: { opacity: 1, y: 0 },
+    hidden: { opacity: 0, y: 20 },
+  };
 
   return (
     <section id="tour-section" className="my-4 md:my-16 md:px-56 px-4">
@@ -120,9 +92,10 @@ const ListTour = () => {
           <motion.div 
             key={tour.id} 
             className="relative mb-8" 
-            ref={fadeInRef}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            ref={ref}
+            initial="hidden"
+            animate={controls}
+            variants={variants}
             transition={{ duration: 0.5 }}
           >
             {/* Image Section */}
@@ -131,6 +104,7 @@ const ListTour = () => {
                 className="object-cover rounded-3xl w-full"
                 src={tour.image}
                 alt={tour.name}
+                onLoad={() => handleImageLoad(tour.id)}
               />
             </div>
 

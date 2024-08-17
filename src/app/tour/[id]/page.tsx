@@ -205,7 +205,7 @@ const TourDetailPage = () => {
             <h1 className="text-3xl font-bold">{tour.name}</h1>
             <div className="flex text-2xl mt-2">
               <div className="flex justify-between">
-                <div className="mr-4">
+                <div className=" w-1/3 mr-4">
                   <p className="text-lg text-gray-600 mb-1">
                     <span className="font-semibold">Thời gian:</span>
                   </p>
@@ -222,7 +222,7 @@ const TourDetailPage = () => {
                     <span className="font-semibold">Địa chỉ:</span>
                   </p>
                 </div>
-                <div className='text-lg'>
+                <div className='w-2/3 text-lg'>
                   <p className="text-gray-600 mb-1">{tour.duration}</p>
                   <p className="text-gray-600 mb-1">{tour.price}</p>
                   <p className="text-gray-600 mb-1">{tour.departure}</p>     
@@ -281,7 +281,7 @@ const TourDetailPage = () => {
       return itinerary.map((item: { title: string; content: string }, i: number) => (
         <React.Fragment key={i}>
           <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="col-span-1">
+            <div className="col-span-1 mr-2">
               <img
                 src={`/images/tour${i + 1}.jpg`}
                 alt="Daily Image"

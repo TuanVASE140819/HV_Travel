@@ -61,18 +61,9 @@ const About: React.FC = () => {
         </div>
 
         {/* Phần 2 */}
-        <div className="w-full lg:w-1/2 text-base">
-          {/* <div
-            dangerouslySetInnerHTML={{
-              __html: companyIntroduction?.content
-                ? companyIntroduction.content
-                    .replace(/<h1>/g, '<h1 class="text-2xl font-bold">')
-                    .replace(/<h4>/g, '<h4 class="font-bold">')
-                : '',
-            }}
-          /> */}
-            
-            <h1 className="font-bold mt-3 text-xl bg-gradient-to-r from-[#f58a1f] to-[#fcc142] bg-clip-text text-transparent">
+        <div className="w-full lg:w-1/2 ">
+          <div>
+          <h1 className="font-bold mt-3 text-xl bg-gradient-to-r from-[#f58a1f] to-[#fcc142] bg-clip-text text-transparent">
             Sứ mệnh
             </h1>
           <p>
@@ -81,7 +72,6 @@ const About: React.FC = () => {
           <h1 className="font-bold mt-3 text-xl bg-gradient-to-r from-[#f58a1f] to-[#fcc142] bg-clip-text text-transparent">
   Tại sao chọn chúng tôi ?
 </h1>
-          <div>
             {/* Chia làm 2 phần */}
             <div className="flex flex-wrap mt-2">
               <h4 className="font-semibold w-full sm:w-1/3">Dịch vụ chuyên nghiệp:</h4>

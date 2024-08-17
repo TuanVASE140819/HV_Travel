@@ -119,7 +119,7 @@ const CommentSlider = () => {
           <Slider {...settings}>
             {comments.map((comment) => (
               <div key={comment.id}>
-                <div className="bg-white flex flex-col justify-start rounded-lg shadow-lg m-4 px-6 py-8">
+                <div className="bg-white flex flex-col justify-start rounded-3xl shadow-lg m-4 px-6 py-8">
                   <div className="flex mt-4 justify-start">
                     <img
                       src={comment.avatar}

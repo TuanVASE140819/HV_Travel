@@ -56,7 +56,7 @@ const Contact: React.FC = () => {
   {companyInfo.map((info, index) => (
     <div key={index}>
       <>
-        <nav>
+        <nav className='text-base'>
           <ul className="mt-4 flex items-center">
             <li>
               <img src="/images/icon_web.jpg" alt="phone" className="w-6 h-6 inline-block mr-4" />

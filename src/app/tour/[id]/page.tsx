@@ -9,14 +9,41 @@ import { FaPhone, FaRegStar, FaStar, FaStarHalfAlt } from 'react-icons/fa';
 import { fetchTours, Tour } from '@/firebaseConfig';
 
 
-const tours = [
-  { id: 1, name: "Khám Phá Cao Nguyên", image: "/images/tour1.jpg", rating: 4.5, time: "3 ngày 2 đêm", price: "3,500,000", khoihanh: "Thứ 6 hàng tuần" },
-  { id: 2, name: "Hành Trình Sapa", image: "/images/tour2.jpg", rating: 4.8, time: "2 ngày 1 đêm", price: "2,500,000", khoihanh: "Thứ 7 hàng tuần" },
-  { id: 3, name: "Đà Lạt Vào Mùa Hoa", image: "/images/tour3.jpg", rating: 4.7, time: "3 ngày 2 đêm", price: "3,000,000", khoihanh: "Thứ 2 hàng tuần" },
-  { id: 4, name: "Miền Tây Bình Yên", image: "/images/tour1.jpg", rating: 4.6, time: "2 ngày 1 đêm", price: "2,000,000", khoihanh: "Thứ 3 hàng tuần" },
-  { id: 5, name: "Hành Trình Phú Quốc", image: "/images/tour2.jpg", rating: 4.9, time: "3 ngày 2 đêm", price: "4,000,000", khoihanh: "Thứ 4 hàng tuần" },
-  { id: 6, name: "Hành Trình Phan Thiết", image: "/images/tour3.jpg", rating: 4.4, time: "2 ngày 1 đêm", price: "2,500,000", khoihanh: "Thứ 5 hàng tuần" },
-];
+const renderStars = (rating: number) => {
+  const stars = [];
+  for (let i = 1; i <= 5; i++) {
+    if (i <= rating) {
+      stars.push(
+       <>
+        <Image
+          key={i}
+              src="/images/star_full.png"
+          alt="star"
+          width={20}
+          height={20}
+          className="mr-2"
+        /></>
+      );
+    } else if (i - rating < 1) {
+      stars.push(<FaStarHalfAlt key={i} className="text-yellow-500 mr-2" />);
+    } else {
+      stars.push(
+        <>
+        <Image
+          key={i}
+              src="/images/star_null.png"
+          alt="star"
+          width={20}
+          height={20}
+          className="mr-2"
+        /></>
+      );
+    }
+  }
+  return stars;
+};
+
+
 
 const Skeleton = () => (
   <div className="animate-pulse">
@@ -57,6 +84,20 @@ const TourDetailPage = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  const [tours, setTours] = useState<Tour[]>([]);
+
+
+  useEffect(() => {
+    const getTours = async () => {
+      const toursData = await fetchTours();
+      setTours(toursData);
+      setLoading(false);
+    };
+
+    getTours();
+  }, []);
+
+
   useEffect(() => {
     const getTourData = async () => {
       try {
@@ -91,16 +132,35 @@ const TourDetailPage = () => {
   if (!tour) {
     return <div>Không tìm thấy tour.</div>;
   }
-
   const renderStars = (rating: number) => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
       if (i <= rating) {
-        stars.push(<FaStar key={i} className="text-yellow-500 mr-2" />);
+        stars.push(
+         <>
+          <Image
+            key={i}
+                src="/images/star_full.png"
+            alt="star"
+            width={20}
+            height={20}
+            className="mr-2"
+          /></>
+        );
       } else if (i - rating < 1) {
         stars.push(<FaStarHalfAlt key={i} className="text-yellow-500 mr-2" />);
       } else {
-        stars.push(<FaRegStar key={i} className="text-yellow-500 mr-2" />);
+        stars.push(
+          <>
+          <Image
+            key={i}
+                src="/images/star_null.png"
+            alt="star"
+            width={25}
+            height={25}
+            className="mr-2"
+          /></>
+        );
       }
     }
     return stars;
@@ -112,14 +172,14 @@ const TourDetailPage = () => {
       <div className="container mx-auto my-4 mt-36 md:px-56 px-4">
         <div className="flex flex-col md:flex-row items-center md:items-start gap-24">
         <div className="w-full md:w-1/2 flex flex-col md:flex-row gap-4">
-  <div className="relative w-full md:w-[35rem] h-[35rem]">
+  <div className="relative w-full  ">
     <img
       src={tour.image}
       alt={tour.name}
-      className="w-full h-[30rem] rounded-3xl"
+      className="w-[26rem] h-[26rem] rounded-3xl"
     />
   </div>
-  <div className="flex flex-row md:flex-col gap-2">
+  <div className="flex flex-row md:flex-col gap-2 justify-center">
   {tour.images?.map((image: string, index: number) => (
                <img
                 key={index} 
@@ -133,32 +193,43 @@ const TourDetailPage = () => {
 </div>
 
           <div className="w-full md:w-1/2">
-            <div className="flex items-center">
-              <span className="text-yellow-500 text-lg">{"★".repeat(Math.round(tour.rating))}</span>
+            <div className="flex items-center mb-2">
+          
+                
+                  <div className="flex items-center">
+                    {renderStars(tour.rating)}
+                  
+                
+              </div>
             </div>
-            <h1 className="text-2xl font-bold">{tour.name}</h1>
+            <h1 className="text-3xl font-bold">{tour.name}</h1>
             <div className="flex text-2xl mt-2">
               <div className="flex justify-between">
                 <div className="mr-4">
-                  <p className="text-lg text-gray-600 mb-1">
+                  <p className="text-xl text-gray-600 mb-1">
                     <span className="font-semibold">Thời gian:</span>
                   </p>
-                  <p className="text-lg text-gray-600 mb-1">
+                  <p className="text-xl text-gray-600 mb-1">
                     <span className="font-semibold">Giá:</span>
                   </p>
-                  <p className=" text-lg text-gray-600 mb-1">
+                  <p className=" text-xl text-gray-600 mb-1">
                     <span className="font-semibold">Khởi hành:</span>
                   </p>
-                  <p className=" text-lg text-gray-600 mb-4">
+                  <p className=" text-xl text-gray-600 mb-1">
+                    <span className="font-semibold">Phương tiện:</span>
+                  </p>
+                  <p className=" text-xl text-gray-600 mb-4">
                     <span className="font-semibold">Địa chỉ:</span>
                   </p>
                 </div>
-                <div className='text-lg'>
+                <div className='text-xl'>
                   <p className="text-gray-600 mb-1">{tour.duration}</p>
                   <p className="text-gray-600 mb-1">{tour.price}</p>
                   <p className="text-gray-600 mb-1">{tour.departure}</p>     
+                 
+                  <p className='text-gray-600 mb-1'>{tour.vehicle}</p>
                   <p className="text-gray-600 mb-4">{tour.address}</p>
-                             </div>
+                  </div>
               </div>
             </div>
             <div className="w-50 h-[1px] bg-gray-300"></div>
@@ -190,7 +261,7 @@ const TourDetailPage = () => {
         <div className="w-50 h-[1px] bg-gray-300"></div>
     {/* Itinerary */}
     <div className="my-8">
-      <h2 className="text-xl font-semibold">Điểm nổi bật</h2>
+      <h2 className="text-xl font-semibold">Điểm nổi bật :</h2>
       <ul className="list-disc list-inside ml-4 mt-2">
         {/* chia là 2 phần */}
         <div className="grid grid-cols-2 gap-2 text-gray-600">
@@ -202,9 +273,9 @@ const TourDetailPage = () => {
       </ul>
     </div>
     <div className="w-50 h-[1px] bg-gray-300"></div>
-      <div className="mt-8">
+      <div className="mt-8 ">
   <h2 className="text-xl font-semibold">Lịch trình chi tiết</h2>
-  <ul className="list-disc list-inside ml-4 mt-2">
+  <ul className="list-disc list-inside ml-4 mt-2 flex flex-col justify-center ">
   {(() => {
     try {
       const itinerary = JSON.parse(tour.itinerary);
@@ -237,19 +308,18 @@ const TourDetailPage = () => {
 </ul>
 </div>
    
-    <div className="mt-8">
+<div className="mt-8">
     <div className="flex flex-row justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold mb-4">Tours</h1>
+        <h1 className="text-xl font-bold mb-4">Tours</h1>
         <button className="rounded-full flex items-center shadow-xl">
           <span className="ml-4 font-bold">ĐẶT NGAY</span>
-          <span className="ml-2 bg-orange-400 text-white p-2 rounded-full">
+          <span className="ml-2 bg-gradient-to-r from-[#f58a1f] to-[#fcc142]  font-bold shadow-lg hover:bg-gradient-to-l text-white p-2 rounded-full">
             <FaPhone />
           </span>
         </button>
-      </div>
-   
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {tours.map((tour) => (
+    </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {tours.slice(0, 3).map((tour) => (
           <div key={tour.id} className="relative mb-8">
             {/* Image Section */}
             <div className="relative flex justify-center items-center">
@@ -262,32 +332,32 @@ const TourDetailPage = () => {
 
             {/* Content Section */}
             <div className="flex justify-center items-center">
-              <div className="relative p-8 bg-white rounded-3xl shadow-lg -mt-12 mx-4 z-6 w-full md:w-3/4">
+              <div className="relative p-8 bg-white rounded-3xl shadow-lg -mt-12 mx-2 z-6 w-full md:w-11/12">
                 {/* Rating */}
                 <div className="flex mb-2">{renderStars(tour.rating)}</div>
                 <h3 className="text-xl font-bold mb-2">{tour.name}</h3>
                 <div className="flex justify-between">
                   <div>
-                    <p className="text-gray-600 mb-1">
+                    <p className="text-gray-600 text-sm mb-1">
                       <span className="font-semibold">Thời gian:</span>
                     </p>
-                    <p className="text-gray-600 mb-1">
+                    <p className="text-gray-600 text-sm mb-1">
                       <span className="font-semibold">Giá:</span>
                     </p>
-                    <p className="text-gray-600 mb-4">
+                    <p className="text-gray-600 text-sm  mb-4">
                       <span className="font-semibold">Khởi hành:</span>
                     </p>
                   </div>
                   <div>
-                    <p className="text-gray-600 mb-1">{tour.time}</p>
-                    <p className="text-gray-600 mb-1">{tour.price}</p>
-                    <p className="text-gray-600 mb-4">{tour.khoihanh}</p>
+                    <p className="text-gray-600 text-sm mb-1">{tour.duration}</p>
+                    <p className="text-gray-600 text-sm mb-1">{tour.price}</p>
+                    <p className="text-gray-600 text-sm mb-4">{tour.departure}</p>
                   </div>
                 </div>
-                <div className="flex justify-center mt-4">
+                <div className="flex justify-center md:mt-2 mt-4">
                   <Link
                     href={`/tour/${tour.id}`}
-                    className="bg-blue-300 text-white text-sm font-semibold py-2 px-10 rounded-full"
+                    className="bg-[#56c5d7] text-white text-sm font-semibold py-2 px-10 rounded-full hover:bg-blue-400 hover:text-gray-100"
                   >
                     Chi tiết
                   </Link>
@@ -296,8 +366,8 @@ const TourDetailPage = () => {
             </div>
           </div>
         ))}
-      </div>
     </div>
+</div>
       </div>
     </>
   );

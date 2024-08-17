@@ -20,6 +20,7 @@ export interface Tour {
     highlights: string[];
     itinerary: string;//lich trinh
     phone: string;
+    vehicle: string;
   }
 
 export interface CompanyIntroduction {
@@ -71,6 +72,7 @@ export const fetchLogoURL = async (): Promise<string> => {
         highlights: data.highlights,
         itinerary: data.itinerary,
         phone: data.phone,
+        vehicle: data.vehicle,
       } as Tour;
     });
     return toursList;

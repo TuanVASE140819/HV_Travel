@@ -88,13 +88,13 @@ const Contact: React.FC = () => {
   <div className="border-b-2 border-gray-300 pt-6 w-full lg:w-3/4"></div>
   <h2 className="text-xl font-bold mt-4 mb-4">Theo dõi chúng tôi</h2>
   <div className="flex space-x-4">
-    <a href="#" className="hover:underline">
+    <a href="https://www.facebook.com/" className="hover:underline">
       <img src="/images/icon_facebook.jpg" alt="Facebook" className="w-8 h-8 inline-block" />
     </a>
-    <a href="#" className="hover:underline">
+    <a href="https://www.instagram.com/" className="hover:underline">
       <img src="/images/icon_instagram.jpg" alt="Instagram" className="w-8 h-8 inline-block" />
     </a>
-    <a href="#" className="hover:underline">
+    <a href="https://zaloweb.vn/" className="hover:underline">
       <img src="/images/icon_zalo.jpg" alt="Zalo" className="w-8 h-8 inline-block" />
     </a>
   </div>

@@ -21,6 +21,7 @@ export interface Tour {
     itinerary: string;//lich trinh
     phone: string;
     vehicle: string;
+    transportation: string;
   }
 
 export interface CompanyIntroduction {
@@ -73,6 +74,7 @@ export const fetchLogoURL = async (): Promise<string> => {
         itinerary: data.itinerary,
         phone: data.phone,
         vehicle: data.vehicle,
+        transportation: data.transportation,
       } as Tour;
     });
     return toursList;

@@ -226,7 +226,7 @@ const TourDetailPage = () => {
                   <p className="text-gray-600 mb-1">{tour.duration}</p>
                   <p className="text-gray-600 mb-1">{tour.price}</p>
                   <p className="text-gray-600 mb-1">{tour.departure}</p>     
-                  <p className='text-gray-600 mb-1'>Xe máy </p>
+                  <p className='text-gray-600 mb-1'>{tour.transportation} </p>
                   <p className="text-gray-600 mb-4">{tour.address}</p>
                   </div>
               </div>

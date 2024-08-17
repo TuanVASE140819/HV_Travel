@@ -7,7 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FaPhone, FaRegStar, FaStar, FaStarHalfAlt } from 'react-icons/fa';
 import { fetchTours, Tour } from '@/firebaseConfig';
-
+import Head from 'next/head';
 
 const renderStars = (rating: number) => {
   const stars = [];
@@ -169,6 +169,17 @@ const TourDetailPage = () => {
   return (
     <>
       {/* Tour Details */}
+      <Head>
+      <title>{tour.name} - Tour Details</title>
+      <meta name="description" content={`Explore the details of the tour ${tour.name} on our website.`} />
+      <meta name="keywords" content={`tour, travel, ${tour.name}`} />
+      <meta property="og:title" content={`${tour.name} - Tour Details`} />
+      <meta property="og:description" content={`Explore the details of the tour ${tour.name} on our website.`} />
+      <meta property="og:image" content={tour.image} />
+      {/* <meta property="og:url" content={`https://yourwebsite.com/tour/${tour.id}`} /> */}
+      <meta property="og:type" content="website" />
+      <meta property="twitter:card" content="summary_large_image" />
+    </Head>
       <div className="container mx-auto my-4 mt-36 md:px-56 px-4">
         <div className="flex flex-col md:flex-row items-center md:items-start gap-24 mb-4">
         <div className="w-full md:w-1/2 flex flex-col md:flex-row gap-4">
@@ -281,7 +292,7 @@ const TourDetailPage = () => {
       return itinerary.map((item: { title: string; content: string }, i: number) => (
         <React.Fragment key={i}>
           <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="col-span-1 mr-2">
+            <div className="col-span-1 mr-3">
               <img
                 src={`/images/tour${i + 1}.jpg`}
                 alt="Daily Image"

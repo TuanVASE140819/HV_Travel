@@ -126,7 +126,7 @@ const TourDetailPage = () => {
                 src={image}
                 alt={`Thumbnail ${index}`} 
 
-               className="rounded-3xl object-cover w-24 h-24 sm:w-28 sm:h-28"
+               className="rounded-3xl object-cover w-24 h-24 sm:w-28   "
              />
             ))}
 </div>
@@ -168,7 +168,7 @@ const TourDetailPage = () => {
               </div>
               <div className="flex items-center">
                 <Image
-              
+                  src="/images/icon_phone.jpg"
                   alt="Phone"
                   width={30}
                   height={30}

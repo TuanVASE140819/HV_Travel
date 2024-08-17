@@ -73,11 +73,15 @@ const About: React.FC = () => {
             }}
           /> */}
             
-          <h2 className="font-semibold mb-2 text-[#f58a1f]">Sứ mệnh</h2>
+            <h1 className="font-bold mt-3 text-xl bg-gradient-to-r from-[#f58a1f] to-[#fcc142] bg-clip-text text-transparent">
+            Sứ mệnh
+            </h1>
           <p>
             Sứ mệnh của chúng tôi là tạo ra những chuyến đi thú vị, an toàn và đầy kỷ niệm cho du khách. Với đội ngũ hướng dẫn viên nhiệt tình, chuyên nghiệp và am hiểu về Đà Lạt, chúng tôi cam kết mang đến cho bạn một hành trình khám phá thiên nhiên, văn hóa và ẩm thực đặc sắc của Đà Lạt.
           </p>
-          <h2 className="font-semibold mt-2 text-[#f58a1f]">Tại sao chọn chúng tôi</h2>
+          <h1 className="font-bold mt-3 text-xl bg-gradient-to-r from-[#f58a1f] to-[#fcc142] bg-clip-text text-transparent">
+  Tại sao chọn chúng tôi ?
+</h1>
           <div>
             {/* Chia làm 2 phần */}
             <div className="flex flex-wrap mt-2">
@@ -88,7 +92,7 @@ const About: React.FC = () => {
                 </p>
               </div>
             </div>  
-            <div className="flex flex-wrap mt-2">
+            <div className="flex flex-wrap mt-4">
               <h4 className="font-semibold w-full sm:w-1/3">Đội ngũ chuyên nghiệp:</h4>
               <div className="w-full sm:w-2/3 ml-auto">
                 <p>
@@ -96,7 +100,7 @@ const About: React.FC = () => {
                 </p>
               </div>
             </div>  
-            <div className="flex flex-wrap mt-2">
+            <div className="flex flex-wrap mt-4">
               <h4 className="font-semibold w-full sm:w-1/3">Dịch vụ đa dạng:</h4>
               <div className="w-full sm:w-2/3 ml-auto">
                 <p>
@@ -104,7 +108,7 @@ const About: React.FC = () => {
                 </p>
               </div>
             </div> 
-            <div className="flex flex-wrap mt-2">
+            <div className="flex flex-wrap mt-4">
               
               <h4 className="font-semibold w-full sm:w-1/3">Giá cả hợp lý:</h4>
               <div className="w-full sm:w-2/3 ml-auto">

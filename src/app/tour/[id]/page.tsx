@@ -170,7 +170,7 @@ const TourDetailPage = () => {
     <>
       {/* Tour Details */}
       <div className="container mx-auto my-4 mt-36 md:px-56 px-4">
-        <div className="flex flex-col md:flex-row items-center md:items-start gap-24">
+        <div className="flex flex-col md:flex-row items-center md:items-start gap-24 mb-4">
         <div className="w-full md:w-1/2 flex flex-col md:flex-row gap-4">
   <div className="relative w-full  ">
     <img
@@ -206,28 +206,27 @@ const TourDetailPage = () => {
             <div className="flex text-2xl mt-2">
               <div className="flex justify-between">
                 <div className="mr-4">
-                  <p className="text-xl text-gray-600 mb-1">
+                  <p className="text-lg text-gray-600 mb-1">
                     <span className="font-semibold">Thời gian:</span>
                   </p>
-                  <p className="text-xl text-gray-600 mb-1">
+                  <p className="text-lg text-gray-600 mb-1">
                     <span className="font-semibold">Giá:</span>
                   </p>
-                  <p className=" text-xl text-gray-600 mb-1">
+                  <p className=" text-lg text-gray-600 mb-1">
                     <span className="font-semibold">Khởi hành:</span>
                   </p>
-                  <p className=" text-xl text-gray-600 mb-1">
+                  <p className=" text-lg text-gray-600 mb-1">
                     <span className="font-semibold">Phương tiện:</span>
                   </p>
-                  <p className=" text-xl text-gray-600 mb-4">
+                  <p className=" text-lg text-gray-600 mb-4">
                     <span className="font-semibold">Địa chỉ:</span>
                   </p>
                 </div>
-                <div className='text-xl'>
+                <div className='text-lg'>
                   <p className="text-gray-600 mb-1">{tour.duration}</p>
                   <p className="text-gray-600 mb-1">{tour.price}</p>
                   <p className="text-gray-600 mb-1">{tour.departure}</p>     
-                 
-                  <p className='text-gray-600 mb-1'>{tour.vehicle}</p>
+                  <p className='text-gray-600 mb-1'>Xe máy </p>
                   <p className="text-gray-600 mb-4">{tour.address}</p>
                   </div>
               </div>

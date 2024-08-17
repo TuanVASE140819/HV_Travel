@@ -7,6 +7,7 @@ import "slick-carousel/slick/slick-theme.css";
 import "../styles/comment.css";
 import { firestore, getDocs, collection } from "../firebaseConfig";
 import { QueryDocumentSnapshot } from "firebase/firestore";
+import Image from "next/image";
 
 interface Comment {
   id: string;
@@ -21,16 +22,35 @@ const renderStars = (rating: number) => {
   const stars = [];
   for (let i = 1; i <= 5; i++) {
     if (i <= rating) {
-      stars.push(<FaStar key={i} className="text-yellow-500 mr-1" />);
+      stars.push(
+       <>
+        <Image
+          key={i}
+              src="/images/star_full.png"
+          alt="star"
+          width={20}
+          height={20}
+          className="mr-2"
+        /></>
+      );
     } else if (i - rating < 1) {
-      stars.push(<FaStarHalfAlt key={i} className="text-yellow-500 mr-1" />);
+      stars.push(<FaStarHalfAlt key={i} className="text-yellow-500 mr-2" />);
     } else {
-      stars.push(<FaRegStar key={i} className="text-yellow-500 mr-1" />);
+      stars.push(
+        <>
+        <Image
+          key={i}
+              src="/images/star_null.png"
+          alt="star"
+          width={20}
+          height={20}
+          className="mr-2"
+        /></>
+      );
     }
   }
   return stars;
 };
-
 const Skeleton = () => (
   <div className="animate-pulse">
     <div className="flex flex-col justify-start rounded-lg shadow-lg m-4 px-6 py-8 bg-gray-300 h-64"></div>

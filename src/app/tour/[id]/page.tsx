@@ -168,7 +168,7 @@ const TourDetailPage = () => {
               </div>
               <div className="flex items-center">
                 <Image
-                  src="/images/icon_phone.jpg"
+              
                   alt="Phone"
                   width={30}
                   height={30}

@@ -5,6 +5,8 @@ import { fetchTours, Tour } from '@/firebaseConfig';
 import { FaPhone, FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import Link from "next/link";
 import Image from 'next/image';
+import useFadeInOnScroll from './useFadeInOnScroll';
+import { motion } from 'framer-motion';
 
 const renderStars = (rating: number) => {
   const stars = [];
@@ -86,6 +88,7 @@ const Skeleton = () => (
 const ListTour = () => {
   const [tours, setTours] = useState<Tour[]>([]);
   const [loading, setLoading] = useState(true);
+  const [fadeInRef] = useFadeInOnScroll();
 
   useEffect(() => {
     const getTours = async () => {
@@ -108,13 +111,20 @@ const ListTour = () => {
         <button className="rounded-full flex items-center shadow-xl">
           <span className="ml-4 font-bold">ĐẶT NGAY</span>
           <span className="ml-2 bg-gradient-to-r from-[#f58a1f] to-[#fcc142]  font-bold shadow-lg hover:bg-gradient-to-l text-white p-2 rounded-full">
-  <FaPhone  />
-</span>
+            <FaPhone />
+          </span>
         </button>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {tours.map((tour) => (
-          <div key={tour.id} className="relative mb-8">
+          <motion.div 
+            key={tour.id} 
+            className="relative mb-8" 
+            ref={fadeInRef}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
             {/* Image Section */}
             <div className="relative flex justify-center items-center">
               <img
@@ -149,16 +159,16 @@ const ListTour = () => {
                   </div>
                 </div>
                 <div className="flex justify-center md:mt-2 mt-4">
-                <Link
-  href={`/tour/${tour.id}`}
-  className="bg-[#56c5d7] text-white text-sm font-semibold py-2 px-10 rounded-full hover:bg-blue-400 hover:text-gray-100"
->
-  Chi tiết
-</Link>
+                  <Link
+                    href={`/tour/${tour.id}`}
+                    className="bg-[#56c5d7] text-white text-sm font-semibold py-2 px-10 rounded-full hover:bg-blue-400 hover:text-gray-100"
+                  >
+                    Chi tiết
+                  </Link>
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>

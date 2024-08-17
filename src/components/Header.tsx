@@ -2,11 +2,13 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { fetchLogoURL, fetchCompanyIntroductiondata } from '@/firebaseConfig';
+
 interface CompanyIntroductionData {
   website: string;
   phone: string;
   address: string;
 }
+
 const Header: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeLink, setActiveLink] = useState<string | null>(null);
@@ -45,11 +47,9 @@ const Header: React.FC = () => {
         {/* Left Section - Logo */}
         <div className="left-section">
           {logoURL ? (
-               <a
-               href="/"  
-             >
-               <Image src={logoURL} alt="logo" width={100} height={100} />
-             </a>
+            <a href="/">
+              <Image src={logoURL} alt="logo" width={100} height={100} />
+            </a>
           ) : (
             <div className='animate-pulse'>
               <div className="bg-gray-200 h-10 w-16  animate-pulse" />
@@ -91,7 +91,8 @@ const Header: React.FC = () => {
               <li>
                 <a 
                   href="#tour-section" 
-                  className={`hover:underline font-bold ${activeLink === '#tour-section' ? 'text-[#56c5d7]' : ''}`}
+                  className={`hover:no-underline hover:text-[#e6d279]
+                     font-bold ${activeLink === '#tour-section' ? 'text-[#56c5d7]' : ''}`}
                   onClick={() => handleLinkClick('#tour-section')}
                 >
                   TOUR
@@ -100,7 +101,7 @@ const Header: React.FC = () => {
               <li>
                 <a 
                   href="#feedback-section" 
-                  className={`hover:underline font-bold ${activeLink === '#feedback-section' ? 'text-[#56c5d7]' : ''}`}
+                  className={`hover:no-underline hover:text-[#e6d279] font-bold ${activeLink === '#feedback-section' ? 'text-[#56c5d7]' : ''}`}
                   onClick={() => handleLinkClick('#feedback-section')}
                 >
                   FEEDBACK
@@ -109,7 +110,7 @@ const Header: React.FC = () => {
               <li>
                 <a 
                   href="#about-section" 
-                  className={`hover:underline font-bold ${activeLink === '#about-section' ? 'text-[#56c5d7]' : ''}`}
+                  className={`hover:no-underline hover:text-[#e6d279] font-bold ${activeLink === '#about-section' ? 'text-[#56c5d7]' : ''}`}
                   onClick={() => handleLinkClick('#about-section')}
                 >
                   VỀ CHÚNG TÔI
@@ -118,7 +119,7 @@ const Header: React.FC = () => {
               <li>
                 <a 
                   href="#contact-section" 
-                  className={`hover:underline font-bold ${activeLink === '#contact-section' ? 'text-[#56c5d7]' : ''}`}
+                  className={`hover:no-underline hover:text-[#e6d279] font-bold ${activeLink === '#contact-section' ? 'text-[#56c5d7]' : ''}`}
                   onClick={() => handleLinkClick('#contact-section')}
                 >
                   LIÊN HỆ
@@ -153,7 +154,7 @@ const Header: React.FC = () => {
               <li>
                 <a 
                   href="#tour-section" 
-                  className={`hover:underline font-bold ${activeLink === '#tour-section' ? 'text-[#fff]' : ''}`}
+                  className={`hover:no-underline font-bold ${activeLink === '#tour-section' ? 'text-[#fff]' : ''}`}
                   onClick={() => handleLinkClick('#tour-section')}
                 >
                   TOUR
@@ -162,7 +163,7 @@ const Header: React.FC = () => {
               <li>
                 <a 
                   href="#feedback-section" 
-                  className={`hover:underline font-bold ${activeLink === '#feedback-section' ? 'text-[#fff]' : ''}`}
+                  className={`hover:no-underline font-bold ${activeLink === '#feedback-section' ? 'text-[#fff]' : ''}`}
                   onClick={() => handleLinkClick('#feedback-section')}
                 >
                   FEEDBACK
@@ -171,7 +172,7 @@ const Header: React.FC = () => {
               <li>
                 <a 
                   href="#about-section" 
-                  className={`hover:underline font-bold ${activeLink === '#about-section' ? 'text-[#fff]' : ''}`}
+                  className={`hover:no-underline font-bold ${activeLink === '#about-section' ? 'text-[#fff]' : ''}`}
                   onClick={() => handleLinkClick('#about-section')}
                 >
                   VỀ CHÚNG TÔI
@@ -180,7 +181,7 @@ const Header: React.FC = () => {
               <li>
                 <a 
                   href="#contact-section" 
-                  className={`hover:underline font-bold ${activeLink === '#contact-section' ? 'text-[#fff]' : ''}`}
+                  className={`hover:no-underline font-bold ${activeLink === '#contact-section' ? 'text-[#fff]' : ''}`}
                   onClick={() => handleLinkClick('#contact-section')}
                 >
                   LIÊN HỆ

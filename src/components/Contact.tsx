@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { collection, addDoc } from 'firebase/firestore';
 import { firestore, fetchCompanyIntroductiondata } from '@/firebaseConfig';
 import Input from './Input';
+import { motion, useAnimation } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
 
 interface ContactInfo {
   name: string;
@@ -23,6 +25,9 @@ const Contact: React.FC = () => {
   const [popupMessage, setPopupMessage] = useState<string | null>(null);
   const [companyInfo, setCompanyInfo] = useState<CompanyIntroductionData[]>([]);
 
+  const controls = useAnimation();
+  const { ref, inView } = useInView();
+
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetchCompanyIntroductiondata();
@@ -30,6 +35,14 @@ const Contact: React.FC = () => {
     };
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (inView) {
+      controls.start('visible');
+    } else {
+      controls.start('hidden');
+    }
+  }, [controls, inView]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -47,58 +60,68 @@ const Contact: React.FC = () => {
     }
   };
 
+  const variants = {
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+    hidden: { opacity: 0, y: 50, transition: { duration: 0.5 } }
+  };
+
   return (
-    <section id="contact-section"  className="my-4 md:my-16 md:px-56 px-4">
+    <motion.section
+      id="contact-section"
+      className="my-4 md:my-16 md:px-56 px-4"
+      ref={ref}
+      initial="hidden"
+      animate={controls}
+      variants={variants}
+    >
       <div className="flex flex-wrap lg:flex-nowrap space-y-8 lg:space-y-0">
-      <div className="w-full lg:w-1/2 text-xl pr-0 lg:pr-4 flex flex-col justify-center">
-  <h2 className="font-bold mb-4">Liên hệ</h2>
-  <p>Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn!</p>
-  {companyInfo.map((info, index) => (
-    <div key={index}>
-      <>
-        <nav className='text-base'>
-          <ul className="mt-4 flex items-center">
-            <li>
-              <img src="/images/icon_web.jpg" alt="phone" className="w-6 h-6 inline-block mr-4" />
-            </li>
-            <li>{info.website}</li>
-          </ul>
-          <ul className="mt-4 flex items-center">
-            <li>
-              <img src="/images/icon_phone.jpg" alt="phone" className="w-6 h-6 inline-block mr-4" />
-            </li>
-            <li>{info.phone}</li>
-          </ul>
-          <ul className="mt-4 flex items-center">
-            <li>
-              <img src="/images/icon_email.jpg" alt="phone" className="w-6 h-6 inline-block mr-4" />
-            </li>
-            <li>{info.gmail}</li>
-          </ul>
-          <ul className="mt-4 flex items-center">
-            <li>
-              <img src="/images/icon_location.jpg" alt="phone" className="w-6 h-6 inline-block mr-4" />
-            </li>
-            <li>{info.address}</li>
-          </ul>
-        </nav>
-      </>
-    </div>
-  ))}
-  <div className="border-b-2 border-gray-300 pt-6 w-full lg:w-3/4"></div>
-  <h2 className="text-xl font-bold mt-4 mb-4">Theo dõi chúng tôi</h2>
-  <div className="flex space-x-4">
-    <a href="https://www.facebook.com/" className="hover:underline">
-      <img src="/images/icon_facebook.jpg" alt="Facebook" className="w-8 h-8 inline-block" />
-    </a>
-    <a href="https://www.instagram.com/" className="hover:underline">
-      <img src="/images/icon_instagram.jpg" alt="Instagram" className="w-8 h-8 inline-block" />
-    </a>
-    <a href="https://zaloweb.vn/" className="hover:underline">
-      <img src="/images/icon_zalo.jpg" alt="Zalo" className="w-8 h-8 inline-block" />
-    </a>
-  </div>
-</div>
+        <div className="w-full lg:w-1/2 text-xl pr-0 lg:pr-4 flex flex-col justify-center">
+          <h2 className="font-bold mb-4">Liên hệ</h2>
+          <p>Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn!</p>
+          {companyInfo.map((info, index) => (
+            <div key={index}>
+              <nav className='text-base'>
+                <ul className="mt-4 flex items-center">
+                  <li>
+                    <img src="/images/icon_web.jpg" alt="phone" className="w-6 h-6 inline-block mr-4" />
+                  </li>
+                  <li>{info.website}</li>
+                </ul>
+                <ul className="mt-4 flex items-center">
+                  <li>
+                    <img src="/images/icon_phone.jpg" alt="phone" className="w-6 h-6 inline-block mr-4" />
+                  </li>
+                  <li>{info.phone}</li>
+                </ul>
+                <ul className="mt-4 flex items-center">
+                  <li>
+                    <img src="/images/icon_email.jpg" alt="phone" className="w-6 h-6 inline-block mr-4" />
+                  </li>
+                  <li>{info.gmail}</li>
+                </ul>
+                <ul className="mt-4 flex items-center">
+                  <li>
+                    <img src="/images/icon_location.jpg" alt="phone" className="w-6 h-6 inline-block mr-4" />
+                  </li>
+                  <li>{info.address}</li>
+                </ul>
+              </nav>
+            </div>
+          ))}
+          <div className="border-b-2 border-gray-300 pt-6 w-full lg:w-3/4"></div>
+          <h2 className="text-xl font-bold mt-4 mb-4">Theo dõi chúng tôi</h2>
+          <div className="flex space-x-4">
+            <a href="https://www.facebook.com/" className="hover:underline">
+              <img src="/images/icon_facebook.jpg" alt="Facebook" className="w-8 h-8 inline-block" />
+            </a>
+            <a href="https://www.instagram.com/" className="hover:underline">
+              <img src="/images/icon_instagram.jpg" alt="Instagram" className="w-8 h-8 inline-block" />
+            </a>
+            <a href="https://zaloweb.vn/" className="hover:underline">
+              <img src="/images/icon_zalo.jpg" alt="Zalo" className="w-8 h-8 inline-block" />
+            </a>
+          </div>
+        </div>
         
         <div className="w-full lg:w-1/2 text-xl pl-0 lg:pl-4">
           <div className="bg-white rounded-3xl shadow-lg p-8 w-full">
@@ -129,7 +152,7 @@ const Contact: React.FC = () => {
           </div>
         </div>
       )}
-    </section>
+    </motion.section>
   );
 };
 

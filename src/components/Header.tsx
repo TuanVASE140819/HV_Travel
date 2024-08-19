@@ -14,6 +14,7 @@ const Header: React.FC = () => {
   const [activeLink, setActiveLink] = useState<string | null>(null);
   const [logoURL, setLogoURL] = useState<string | null>(null);
   const [companyInfo, setCompanyInfo] = useState<CompanyIntroductionData[]>([]);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -41,8 +42,23 @@ const Header: React.FC = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
-    <header className="fixed top-0 left-0 w-full bg-white z-10">
+    <header className={`fixed top-0 left-0 w-full bg-white z-10 ${isScrolled ? 'shadow-lg' : ''}`}>
       <div className="flex justify-between items-center container mx-auto p-4">
         {/* Left Section - Logo */}
         <div className="left-section">

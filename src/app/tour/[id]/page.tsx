@@ -171,7 +171,7 @@ const TourDetailPage = () => {
                   key={index}
                   src={image}
                   alt={`Thumbnail ${index}`}
-                  className="rounded-3xl object-cover w-24 h-24 sm:w-28"
+                  className="rounded-3xl object-cover w-[8rem] h-24 sm:w-30"
                 />
               ))}
             </div>
@@ -260,7 +260,6 @@ const TourDetailPage = () => {
                  
                  <React.Fragment key={i}>
                    <motion.div
-                 
                   className="relative mb-8"
                   initial={{ opacity: 0, y: 50 }}
                   whileInView={{ opacity: 1, y: 0 }}

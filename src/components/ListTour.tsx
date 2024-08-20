@@ -76,13 +76,21 @@ const ListTour = () => {
     hidden: { opacity: 0, y: 20 },
   };
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="loader"></div>
+      </div>
+    );
+  }
+
   return (
-    <section id="tour-section" className="my-4 md:my-16 md:px-56 px-4">
+    <section id="tour-section" className="my-4 md:my-16 md:px-32 px-4">
       <div className="flex flex-row justify-between items-center mb-4">
         <h1 className="text-xl font-bold mb-4">Tours</h1>
         <button className="rounded-full flex items-center shadow-xl">
           <span className="ml-4 font-bold">ĐẶT NGAY</span>
-          <span className="ml-2 bg-gradient-to-r from-[#f58a1f] to-[#fcc142]  font-bold shadow-lg hover:bg-gradient-to-l text-white p-2 rounded-full">
+          <span className="ml-2 bg-gradient-to-r from-[#f58a1f] to-[#fcc142] font-bold shadow-lg hover:bg-gradient-to-l text-white p-2 rounded-full">
             <FaPhone />
           </span>
         </button>
@@ -93,9 +101,11 @@ const ListTour = () => {
             key={tour.id} 
             className="relative mb-8" 
             ref={ref}
-            initial="hidden"
-            animate={controls}
-            variants={variants}
+            // initial="hidden"
+            // animate={controls}
+            // variants={variants}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
             {/* Image Section */}
@@ -122,7 +132,7 @@ const ListTour = () => {
                     <p className="text-gray-600 text-sm mb-1">
                       <span className="font-semibold">Giá:</span>
                     </p>
-                    <p className="text-gray-600 text-sm  mb-4">
+                    <p className="text-gray-600 text-sm mb-4">
                       <span className="font-semibold">Khởi hành:</span>
                     </p>
                   </div>

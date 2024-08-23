@@ -171,7 +171,7 @@ const TourDetailPage = () => {
                   key={index}
                   src={image}
                   alt={`Thumbnail ${index}`}
-                  className="rounded-3xl object-cover w-[8rem] h-24 sm:w-30"
+                  className="rounded-3xl object-cover w-[5.5rem] h-24 sm:w-30 md:w-[8rem]"
                 />
               ))}
             </div>

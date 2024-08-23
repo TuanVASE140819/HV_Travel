@@ -61,7 +61,7 @@ const Header: React.FC = () => {
     <header className={`fixed top-0 left-0 w-full bg-white z-10 ${isScrolled ? 'shadow-lg' : ''}`}>
       <div className="flex justify-between items-center container mx-auto p-4">
         {/* Left Section - Logo */}
-        <div className="left-section">
+        <div className="left-section ml-32 md:ml-0">
           {logoURL ? (
             <a href="/">
               <Image src={logoURL} alt="logo" width={100} height={100} />
@@ -75,14 +75,15 @@ const Header: React.FC = () => {
 
         {/* Right Section - Info & Menu Button */}
         <div className="right-section">
-          <div className="flex justify-end items-center space-x-4">
+        <div className="flex justify-center w-full md:w-auto">
+          {/* <div className="flex justify-end items-center space-x-4"> */}
             {companyInfo.length > 0 && (
               <>
-                <div className="hidden md:flex items-center space-x-2 text-sm">
+                <div className="hidden md:flex items-center space-x-2 text-sm mr-2">
                   <Image src="/images/icon_web.jpg" alt="icon" width={20} height={20} />
                   <span>{companyInfo[0].website}</span>
                 </div>
-                <div className="hidden md:flex items-center space-x-2 text-sm">
+                <div className="hidden md:flex items-center space-x-2 text-sm mr-2">
                   <Image src="/images/icon_phone.jpg" alt="icon" width={20} height={20} />
                   <span>{companyInfo[0].phone}</span>
                 </div>

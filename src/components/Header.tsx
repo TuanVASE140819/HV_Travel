@@ -59,12 +59,13 @@ const Header: React.FC = () => {
 
   return (
     <header className={`fixed top-0 left-0 w-full bg-white z-10 ${isScrolled ? 'shadow-lg' : ''}`}>
-      <div className="flex justify-between items-center container mx-auto p-4">
+      <div className="flex justify-between items-center container mx-auto px-4 py-2 md:px-4">
         {/* Left Section - Logo */}
-        <div className="left-section ml-32 md:ml-0">
+        <div className="left-section ml-36 md:ml-0">
           {logoURL ? (
             <a href="/">
-              <Image src={logoURL} alt="logo" width={100} height={100} />
+              <Image src={logoURL} alt="logo" width={100} height={100} 
+              className='w-20  md:w-32 ' />
             </a>
           ) : (
             <div className='animate-pulse'>
